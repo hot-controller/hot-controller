@@ -19,8 +19,8 @@
     "url": "git+https://github.com/hot-controller/hot-controller.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Philip Andersson <philipodev@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hot-controller/hot-controller/issues"
   },
