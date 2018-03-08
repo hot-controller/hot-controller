@@ -3,8 +3,10 @@ const { addMiddleware } = require('../../utils');
 
 let app;
 describe('Simple controller', () => {
-  beforeAll(async () => {
-    app = await addMiddleware(global.__APP__, __dirname);
+  beforeAll(() => {
+    return addMiddleware(global.__APP__, __dirname).then(_app => {
+      app = _app;
+    });
   });
 
   test('GET /', done => {

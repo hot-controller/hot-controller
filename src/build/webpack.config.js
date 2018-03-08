@@ -54,7 +54,7 @@ module.exports = async function({
                   require('babel-preset-env'),
                   {
                     targets: {
-                      node: '8.0.0'
+                      node: '6'
                     }
                   }
                 ]
