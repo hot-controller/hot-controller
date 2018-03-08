@@ -4,7 +4,8 @@ const express = require('express');
 const path = require('path');
 const ControllerManager = require('../manager');
 const getOptions = require('./options');
-const dev = process.env.NODE_ENV !== 'production';
+const dev =
+  process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
 
 module.exports = function(callback, cwd = process.cwd()) {
   const router = express.Router();

@@ -1,10 +1,12 @@
 const { resolve } = require('path');
 const ControllerCompiler = require('../src/build');
-const PATHS = ['__tests__/simple'];
 const logger = require('../src/logger');
+
+const PATHS = ['__tests__/simple'];
 
 (function() {
   logger('building for tests');
+
   PATHS.forEach(path => {
     let resolvedPath = resolve(__dirname, path);
     new ControllerCompiler({

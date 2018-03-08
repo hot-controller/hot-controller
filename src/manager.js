@@ -8,11 +8,11 @@ class ControllerManager {
   }
 
   reload() {
-    this.loadControllers();
     return this.load();
   }
 
   load() {
+    this.loadControllers();
     this.stackRouter();
     return this.getControllers();
   }
