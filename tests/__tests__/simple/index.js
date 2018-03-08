@@ -17,6 +17,15 @@ describe('Simple controller', () => {
       });
   });
 
+  test('GET 404', done => {
+    request(app)
+      .get('/simple___')
+      .then(response => {
+        expect(response.statusCode).toBe(404);
+        done();
+      });
+  });
+
   test('GET /users', done => {
     request(app)
       .get('/simple/users')
