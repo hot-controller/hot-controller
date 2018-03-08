@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 const express = require('express');
 
 class Controller {
@@ -15,15 +17,18 @@ class Controller {
   __initRouter() {
     this.__routes.forEach((methodName, _path) => {
       let [reqMethod, path] = _path.split(' ');
+      const method = this[methodName];
+      const isAsync = method.constructor.name === 'AsyncFunction';
+
       path = reformatRouteName(path);
 
       this.__router[reqMethod.toLowerCase()].call(
         this.__router,
         path,
-        (req, res, next) =>
-          Promise.resolve(this[methodName].call(this, req, res, next)).catch(
-            next
-          )
+        isAsync
+          ? (req, res, next) =>
+              Promise.resolve(method.call(this, req, res, next)).catch(next)
+          : method.bind(this)
       );
     });
   }
