@@ -1,6 +1,6 @@
 const { resolve } = require('path');
-const ControllerCompiler = require('../src/build');
-const logger = require('../src/logger');
+const ControllerCompiler = require('../lib/build');
+const logger = require('../lib/logger');
 
 const PATHS = ['__tests__/simple'];
 

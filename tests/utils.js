@@ -1,4 +1,4 @@
-const middleware = require('../src/middleware');
+const middleware = require('../lib/middleware');
 
 function addMiddleware(app, dir) {
   return new Promise(resolve => {
