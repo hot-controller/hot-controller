@@ -5,11 +5,13 @@ const path = require('path');
 const { getEntriesFromDir } = require('./utils');
 const ControllerPlugin = require('./plugins/controller');
 const fs = require('fs');
-const node_modules = fs
-  .readdirSync(path.resolve(process.cwd(), 'node_modules'))
-  .filter(function(x) {
-    return x !== '.bin';
-  });
+const THIS_ROOT = path.resolve(__dirname, '../..');
+const node_modules = (function() {
+  const project = getNodeModulesList(THIS_ROOT);
+  const local = getNodeModulesList(process.cwd());
+
+  return project.concat(local);
+})();
 
 module.exports = async function({
   watch = false,
@@ -67,3 +69,12 @@ module.exports = async function({
     }
   };
 };
+
+function getNodeModulesList(wd) {
+  const _path = path.resolve(wd, 'node_modules');
+  return fs.existsSync(_path)
+    ? fs.readdirSync(_path).filter(function(x) {
+        return x !== '.bin';
+      })
+    : [];
+}
