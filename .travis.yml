@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - '6'
+  - '8'
+cache:
+  yarn: true
+script:
+  - yarn test:ci
+  - yarn lint
+sudo: false
