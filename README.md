@@ -5,3 +5,12 @@
 [![David Dependancy Status](https://david-dm.org/hot-controller/hot-controller.svg)](https://david-dm.org/hot-controller/hot-controller)
 [![npm](https://img.shields.io/npm/l/hot-controller.svg)](https://github.com/hot-controller/hot-controller/blob/master/LICENSE)
 [![Greenkeeper badge](https://badges.greenkeeper.io/hot-controller/hot-controller.svg)](https://greenkeeper.io/)
+
+## Features
+
+* 🔧 Zero configuration needed to get started.
+* 🔥 **hot module replacement** on your controllers
+* 🍾 `async`/`await` support
+* ⚙️ Use as middleware with `express` or standalone.
+
+## Getting started
