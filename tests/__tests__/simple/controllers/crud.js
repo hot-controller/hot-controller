@@ -6,25 +6,25 @@ const { Controller, Route, Root } = require('../../../../src');
 @Root('/crud')
 class CrudController extends Controller {
   @Route.GET('/')
-  async index(req, res) {
+  index(req, res) {
     // test
     res.send('GET');
   }
 
   @Route.POST('/')
-  async post(req, res) {
+  post(req, res) {
     // test
     res.send('POST');
   }
 
   @Route.PUT('/')
-  async put(req, res) {
+  put(req, res) {
     // test
     res.send('PUT');
   }
 
   @Route.DELETE('/')
-  async _delete(req, res) {
+  _delete(req, res) {
     // test
     res.send('DELETE');
   }

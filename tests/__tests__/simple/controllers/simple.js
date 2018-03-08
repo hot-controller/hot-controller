@@ -6,19 +6,19 @@ const { Controller, Route, Root } = require('../../../../src');
 @Root('/simple')
 class SimpleController extends Controller {
   @Route.GET('/')
-  async index(req, res) {
+  index(req, res) {
     // test
     res.send('/');
   }
 
   @Route.GET('/users')
-  async users(req, res) {
+  users(req, res) {
     // test
     res.send('/users');
   }
 
   @Route.GET('/users/:id')
-  async user(req, res) {
+  user(req, res) {
     // test
     res.send('/users/' + req.params.id);
   }
