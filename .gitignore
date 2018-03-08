@@ -24,3 +24,7 @@ node_modules/
 ### VisualStudioCode ###
 .vscode/
 .history
+
+.build
+dist
+package-lock.json

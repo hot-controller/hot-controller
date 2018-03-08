@@ -1,8 +1,10 @@
+const ControllerError = require('./error');
+
 class ControllerManager {
   constructor(router, { outputDir }) {
     this.controllerMap = new ControllerMap();
     this.router = router;
-    this.outputDir = require.resolve(outputDir);
+    this.outputDir = outputDir;
   }
 
   reload() {
@@ -18,10 +20,22 @@ class ControllerManager {
   stackRouter() {
     // clear the stack
     this.router.stack = [];
+    this.rootPathMap = new Map();
 
     this.getControllers().forEach(Controller => {
       const _instance = new Controller();
+      if (this.rootPathMap.has(_instance.__path)) {
+        throw new ControllerError(
+          `${_instance.name}: A controller with root path ${
+            _instance.__path
+          } (${this.rootPathMap.get(
+            _instance.path
+          )}) has already been initialised.`
+        );
+      }
+
       _instance.__connectRouter(this.router);
+      this.rootPathMap.set(_instance.__path, _instance);
     });
   }
 
@@ -38,7 +52,7 @@ class ControllerManager {
     // first clear the node require cache
     this.clearControllerCache();
 
-    let controllers = require(this.outputDir);
+    let controllers = require(require.resolve(this.outputDir));
     for (let controllerName in controllers) {
       this.controllerMap.set(controllerName, controllers[controllerName]);
     }
@@ -50,7 +64,7 @@ class ControllerManager {
         delete require.cache[path];
       });
 
-      delete require.cache[this.outputDir];
+      delete require.cache[require.resolve(this.outputDir)];
     }
   }
 }

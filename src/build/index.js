@@ -1,13 +1,17 @@
 /* eslint-disable no-console */
 
 const webpack = require('webpack');
-const config = require('./controllers.config');
-const logger = require('../logger');
+const config = require('./webpack.config');
 
 class ControllerCompiler {
   constructor({ controllerDir, outputDir }) {
     this.controllerDir = controllerDir;
     this.outputDir = outputDir;
+    this.webpackCompiler = null;
+  }
+
+  close() {
+    this.webpackCompiler.close();
   }
 
   build(cb) {
@@ -19,16 +23,14 @@ class ControllerCompiler {
   }
 
   async runWebpack(watch = false, cb) {
-    return webpack(
+    return (this.webpackCompiler = webpack(
       await config({
         watch,
         controllerDir: this.controllerDir,
         outputDir: this.outputDir
       }),
       (err, stats) => {
-        if (!stats.hasErrors()) {
-          logger('Controllers compiled at ' + new Date().toLocaleTimeString());
-        } else {
+        if (stats.hasErrors()) {
           console.log(
             stats.toString({
               colors: true
@@ -38,7 +40,7 @@ class ControllerCompiler {
 
         cb(err, stats);
       }
-    );
+    ));
   }
 }
 

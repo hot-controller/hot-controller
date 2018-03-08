@@ -3,7 +3,7 @@
 
 const path = require('path');
 const { getEntriesFromDir } = require('./utils');
-const ControllerPlugin = require('./plugins/controllers');
+const ControllerPlugin = require('./plugins/controller');
 const fs = require('fs');
 const node_modules = fs
   .readdirSync(path.resolve(process.cwd(), 'node_modules'))
@@ -11,7 +11,11 @@ const node_modules = fs
     return x !== '.bin';
   });
 
-module.exports = async function({ watch = false, controllerDir, outputDir }) {
+module.exports = async function({
+  watch = false,
+  controllerDir,
+  outputDir = path.resolve(process.cwd(), 'dist/controllers')
+}) {
   const entries = await getEntriesFromDir(controllerDir);
   return {
     entry: entries,
