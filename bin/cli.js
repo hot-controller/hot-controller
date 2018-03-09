@@ -19,6 +19,10 @@ program
     serve(options, true);
   });
 
+program.command('init').action(function(options) {
+  require('./commands/init')(options);
+});
+
 program.command('build').action(function() {});
 
 // make "dev" the default command

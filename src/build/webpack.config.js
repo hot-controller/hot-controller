@@ -20,7 +20,7 @@ module.exports = async function({
 }) {
   const entries = await getEntriesFromDir(controllerDir);
   return {
-    cache: process.env.NODE_ENV === 'development',
+    cache: watch,
     entry: entries,
     output: {
       path: outputDir,
