@@ -8,9 +8,11 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "test": "npm run lint && npm run test:unit",
+    "test": "npm-run-all build test:build test:ci",
     "test:build": "node tests/build.js",
     "test:ci": "jest --config=tests/jest.config.js",
+    "test:simple":
+      "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
     "build": "babel src -d lib",
     "prepublish": "yarn build"
   },
@@ -47,6 +49,7 @@
     "express": "^4.16.2",
     "lodash": "^4.17.5",
     "mkdirp": "^0.5.1",
+    "npm-run-all": "^4.1.2",
     "recursive-readdir": "^2.2.2",
     "shuri": "^1.0.1",
     "webpack": "^4.1.0",
