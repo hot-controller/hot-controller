@@ -30,6 +30,6 @@
 | Software         | Version(s) |
 | ---------------- | ---------- |
 | hot-controller   |                <!-- $ hot-controller -V -->
-| Node             |                <!-- $ node-v -->
+| Node             |                <!-- $ node -v -->
 | npm/Yarn         |                <!-- $ npm -v or yarn -V -->
 | Operating System |                
