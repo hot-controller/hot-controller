@@ -29,6 +29,9 @@ module.exports = async function({
       libraryExport: 'default',
       libraryTarget: 'commonjs2'
     },
+    resolveLoader: {
+      modules: ['node_modules', path.resolve(__dirname, '../../node_modules')]
+    },
     resolve: {
       alias: {
         'hot-controller$': path.resolve(__dirname, '../../index.js'),
