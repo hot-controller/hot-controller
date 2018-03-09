@@ -1,13 +1,10 @@
-const { Controller, Route } = require('../../../index');
+const { Controller, Route } = require('hot-controller');
 
-// tell us this is a controller and on what root-path it should control.
 @Controller('/')
 export default class HomeController {
-  // declare your methods below
-
   @Route.GET('/')
   index(req, res) {
-    //
+    // index
     res.send('Welcome');
   }
 }
