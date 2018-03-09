@@ -8,7 +8,7 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "test": "npm-run-all build test:build test:ci",
+    "test": "npm-run-all lint build test:build test:ci",
     "test:build": "node tests/build.js",
     "test:ci": "jest --config=tests/jest.config.js",
     "test:simple":
@@ -20,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/hot-controller/hot-controller.git"
   },
-  "keywords": [],
+  "keywords": ["express", "controller", "hmr"],
   "author": "Philip Andersson <philipodev@gmail.com>",
   "license": "MIT",
   "bugs": {
