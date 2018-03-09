@@ -15,7 +15,7 @@
     "test:simple":
       "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
     "build": "babel src -d lib",
-    "prepublish": "npm-run-all test"
+    "prepare": "yarn build"
   },
   "repository": {
     "type": "git",
