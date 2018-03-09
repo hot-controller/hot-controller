@@ -27,7 +27,7 @@ or `yarn global add hot-controller`
 
 1.  `npm install hot-controller --save` or `yarn add hot-controller`
 2.  in your `package.json` add the following:
-    ```json
+    ```js
     "scripts": {
       ...
       "start": "hot-controller serve",
@@ -133,7 +133,7 @@ There are many ways to configure hot-controller:
 
 2.  in `package.json`
 
-    ```json
+    ```js
     {
       ...
 
