@@ -24,19 +24,23 @@ class ControllerManager {
     this.rootPathMap = new Map();
 
     this.getControllers().forEach(controllerClass => {
-      const controller = new Controller(controllerClass);
-      if (this.rootPathMap.has(controller.__path)) {
-        throw new ControllerError(
-          `${controller.controllerInstance.name}: A controller with root path ${
-            controller.path
-          } (${this.rootPathMap.get(
-            controller.path
-          )}) has already been initialised.`
-        );
-      }
+      if (typeof controllerClass === 'function') {
+        const controller = new Controller(controllerClass);
+        if (this.rootPathMap.has(controller.__path)) {
+          throw new ControllerError(
+            `${
+              controller.controllerInstance.name
+            }: A controller with root path ${
+              controller.path
+            } (${this.rootPathMap.get(
+              controller.path
+            )}) has already been initialised.`
+          );
+        }
 
-      controller.connectRouter(this.router);
-      this.rootPathMap.set(controller.path, controller);
+        controller.connectRouter(this.router);
+        this.rootPathMap.set(controller.path, controller);
+      }
     });
   }
 
