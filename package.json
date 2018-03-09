@@ -6,6 +6,7 @@
   "bin": {
     "hot-controller": "./bin/cli.js"
   },
+  "files": ["bin/", "lib/", "src/", "index.js"],
   "scripts": {
     "lint": "eslint src",
     "test": "npm-run-all lint build test:build test:ci",
