@@ -28,6 +28,15 @@ module.exports = async function({
       libraryExport: 'default',
       libraryTarget: 'commonjs2'
     },
+    resolve: {
+      alias: {
+        'hot-controller$': path.resolve(__dirname, '../../index.js'),
+        'hot-controller/middleware$': path.resolve(
+          __dirname,
+          '../../middleware.js'
+        )
+      }
+    },
     externals: node_modules,
     target: 'node',
     mode: 'production',
