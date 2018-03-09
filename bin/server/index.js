@@ -11,7 +11,7 @@ module.exports = function({ port = 3000 }) {
     app.listen(port, function() {
       console.clear();
       logger(`controlled server started at http://localhost:${port}`);
-      logger(`create your controllers at /${friendlyPath}`);
+      logger(`edit your controllers at /${friendlyPath}`);
     });
   });
 };
