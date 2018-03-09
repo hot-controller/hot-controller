@@ -4,7 +4,7 @@ const { Controller, Route, Root } = require('../../../../src');
  */
 
 @Root('/simple')
-class SimpleController extends Controller {
+export default class SimpleController extends Controller {
   @Route.GET('/')
   index(req, res) {
     // test
@@ -23,5 +23,3 @@ class SimpleController extends Controller {
     res.send('/users/' + req.params.id);
   }
 }
-
-export default SimpleController;
