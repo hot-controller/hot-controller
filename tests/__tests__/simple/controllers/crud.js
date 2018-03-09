@@ -1,10 +1,10 @@
-const { Controller, Route, Root } = require('../../../../src');
+const { Controller, Route } = require('../../../../src');
 /**
  * TestController
  */
 
-@Root('/crud')
-class CrudController extends Controller {
+@Controller('/crud')
+class CrudController {
   @Route.GET('/')
   index(req, res) {
     // test
