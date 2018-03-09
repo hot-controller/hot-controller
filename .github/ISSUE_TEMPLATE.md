@@ -29,7 +29,7 @@
 
 | Software         | Version(s) |
 | ---------------- | ---------- |
-| Parcel           |
-| Node             |
-| npm/Yarn         |
-| Operating System |
+| hot-controller   |                <!-- $ hot-controller -V -->
+| Node             |                <!-- $ node-v -->
+| npm/Yarn         |                <!-- $ npm -v or yarn -V -->
+| Operating System |                
