@@ -6,14 +6,18 @@
   "bin": {
     "hot-controller": "./bin/cli.js"
   },
-  "files": ["bin/", "lib/", "src/", "index.js"],
+  "files": [
+    "bin/",
+    "lib/",
+    "src/",
+    "index.js"
+  ],
   "scripts": {
     "lint": "eslint src",
     "test": "npm-run-all lint build test:build test:ci",
     "test:build": "node tests/build.js",
     "test:ci": "jest --config=tests/jest.config.js",
-    "test:simple":
-      "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
+    "test:simple": "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
     "build": "babel src -d lib",
     "prepare": "yarn build"
   },
@@ -21,7 +25,11 @@
     "type": "git",
     "url": "git+https://github.com/hot-controller/hot-controller.git"
   },
-  "keywords": ["express", "controller", "hmr"],
+  "keywords": [
+    "express",
+    "controller",
+    "hmr"
+  ],
   "author": "Philip Andersson <philipodev@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -46,6 +54,8 @@
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-env": "^1.6.1",
+    "chalk": "^2.3.2",
+    "chokidar": "^2.0.2",
     "commander": "^2.15.0",
     "express": "^4.16.2",
     "lodash": "^4.17.5",
