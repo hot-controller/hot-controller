@@ -19,8 +19,6 @@ class ControllerManager {
   }
 
   stackRouter() {
-    // clear the stack
-    this.router.stack = [];
     this.rootPathMap = new Map();
 
     this.getControllers().forEach(controllerClass => {

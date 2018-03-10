@@ -46,6 +46,10 @@ class PluginManager {
     }
   }
 
+  emitBeforeControllers() {
+    this.emit('before-controllers', this.router);
+  }
+
   emit(event, ...args) {
     return this.emitter.emit(event, ...args);
   }

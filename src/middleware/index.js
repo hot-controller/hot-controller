@@ -12,13 +12,13 @@ module.exports = function(
   cwd = process.cwd()
 ) {
   const router = express.Router();
-  const pluginManager = new PluginManager(router);
+  const plugins = new PluginManager(router);
 
   (async () => {
     const options = await getOptions(cwd, middlewareOptions);
 
-    await pluginManager.loadPluginsFromOptions(options);
-    router.stack = [];
+    await plugins.loadPluginsFromOptions(options);
+    plugins.emitBeforeControllers();
 
     const outputDir = path.resolve(cwd, options.distDir);
     const controllerDir = path.resolve(cwd, options.dir);
@@ -30,6 +30,9 @@ module.exports = function(
 
       compiler.watch(function(err) {
         if (err === null) {
+          // clear the stack
+          router.stack = [];
+          plugins.emitBeforeControllers();
           controllerManager.reload();
           callback && callback(router, compiler, options);
         }
