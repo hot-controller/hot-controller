@@ -2,7 +2,7 @@ const { resolve } = require('path');
 const ControllerCompiler = require('../lib/build');
 const logger = require('../lib/logger');
 
-const PATHS = ['__tests__/simple'];
+const PATHS = ['__tests__/simple', '__tests__/plugins'];
 
 (function() {
   logger('building for tests');
