@@ -1,8 +1,12 @@
 const request = require('supertest');
 const { addMiddleware } = require('../../utils');
+const createEventPlugin = require('./plugins/events');
 
 let app;
-let emitter;
+let events = {
+  afterControllers: false
+};
+
 describe('Plugin events', () => {
   beforeAll(
     () =>
@@ -10,7 +14,10 @@ describe('Plugin events', () => {
         return addMiddleware(global.__APP__, __dirname, {
           // send reference to plugin so it can assign it the emitter
           plugins: [
-            require('./plugins/routes')(_emitter => (emitter = _emitter))
+            require('./plugins/routes'),
+            createEventPlugin('after-controllers', () => {
+              events.afterControllers = true;
+            })
           ]
         }).then(_app => {
           app = _app;
@@ -28,5 +35,9 @@ describe('Plugin events', () => {
         expect(response.text).toBe('route from plugin');
         done();
       });
+  });
+
+  test('After controllers', async () => {
+    expect(events.afterControllers).toBe(true);
   });
 });
