@@ -50,6 +50,10 @@ class PluginManager {
     this.emit('before-controllers', this.router);
   }
 
+  emitAfterControllers(controllerMap) {
+    this.emit('after-controllers', this.router, controllerMap);
+  }
+
   emit(event, ...args) {
     return this.emitter.emit(event, ...args);
   }

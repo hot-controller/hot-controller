@@ -2,10 +2,11 @@ const ControllerError = require('./error');
 const Controller = require('./controller');
 
 class ControllerManager {
-  constructor(router, { outputDir }) {
+  constructor(router, plugins, { outputDir }) {
     this.controllerMap = new ControllerMap();
     this.router = router;
     this.outputDir = outputDir;
+    this.plugins = plugins;
   }
 
   reload() {
@@ -40,6 +41,8 @@ class ControllerManager {
         this.rootPathMap.set(controller.path, controller);
       }
     });
+
+    this.plugins.emitAfterControllers(this.rootPathMap);
   }
 
   getControllers() {

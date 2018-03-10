@@ -22,7 +22,9 @@ module.exports = function(
 
     const outputDir = path.resolve(cwd, options.distDir);
     const controllerDir = path.resolve(cwd, options.dir);
-    const controllerManager = new ControllerManager(router, { outputDir });
+    const controllerManager = new ControllerManager(router, plugins, {
+      outputDir
+    });
 
     if (dev) {
       const ControllerCompiler = require('../build');
