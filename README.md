@@ -1,4 +1,4 @@
-<img src="./logo.png" alt="Hot Controller" title="Hot Controller" style="max-width: 800px" />
+<img src="./logo.png" alt="Hot Controller" title="Hot Controller" style="max-width: 600px" />
 
 [![Travis CI Build Status](https://travis-ci.org/hot-controller/hot-controller.svg?branch=master)](https://travis-ci.org/hot-controller/hot-controller)
 [![Travis CI Linux Build Status](https://img.shields.io/travis/hot-controller/hot-controller/master.svg?label=linux)](https://travis-ci.org/hot-controller/hot-controller)
