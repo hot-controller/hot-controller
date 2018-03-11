@@ -20,6 +20,7 @@ module.exports = async function({
 }) {
   const entries = await getEntriesFromDir(controllerDir);
   return {
+    cache: watch,
     entry: entries,
     output: {
       path: outputDir,
@@ -27,6 +28,18 @@ module.exports = async function({
       library: 'controller',
       libraryExport: 'default',
       libraryTarget: 'commonjs2'
+    },
+    resolveLoader: {
+      modules: ['node_modules', path.resolve(__dirname, '../../node_modules')]
+    },
+    resolve: {
+      alias: {
+        'hot-controller$': path.resolve(__dirname, '../../index.js'),
+        'hot-controller/middleware$': path.resolve(
+          __dirname,
+          '../../middleware.js'
+        )
+      }
     },
     externals: node_modules,
     target: 'node',

@@ -1,4 +1,5 @@
 const ControllerError = require('./error');
+const Controller = require('./controller');
 
 class ControllerManager {
   constructor(router, { outputDir }) {
@@ -22,20 +23,24 @@ class ControllerManager {
     this.router.stack = [];
     this.rootPathMap = new Map();
 
-    this.getControllers().forEach(Controller => {
-      const _instance = new Controller();
-      if (this.rootPathMap.has(_instance.__path)) {
-        throw new ControllerError(
-          `${_instance.name}: A controller with root path ${
-            _instance.__path
-          } (${this.rootPathMap.get(
-            _instance.path
-          )}) has already been initialised.`
-        );
-      }
+    this.getControllers().forEach(controllerClass => {
+      if (typeof controllerClass === 'function') {
+        const controller = new Controller(controllerClass);
+        if (this.rootPathMap.has(controller.__path)) {
+          throw new ControllerError(
+            `${
+              controller.controllerInstance.name
+            }: A controller with root path ${
+              controller.path
+            } (${this.rootPathMap.get(
+              controller.path
+            )}) has already been initialised.`
+          );
+        }
 
-      _instance.__connectRouter(this.router);
-      this.rootPathMap.set(_instance.__path, _instance);
+        controller.connectRouter(this.router);
+        this.rootPathMap.set(controller.path, controller);
+      }
     });
   }
 

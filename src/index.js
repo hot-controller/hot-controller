@@ -1,5 +1,4 @@
 module.exports = {
-  Controller: require('./controller'),
-  Root: require('./decorators/root'),
+  Controller: require('./decorators/controller'),
   Route: require('./decorators/route')
 };
