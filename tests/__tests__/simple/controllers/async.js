@@ -1,10 +1,10 @@
-const { Controller, Route, Root } = require('../../../../src');
+const { Controller, Route } = require('../../../../src');
 /**
  * TestController
  */
 
-@Root('/async')
-class AsyncController extends Controller {
+@Controller('/async')
+class AsyncController {
   @Route.GET('/')
   async index(req, res) {
     // test
