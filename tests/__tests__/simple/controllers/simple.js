@@ -24,4 +24,4 @@ class SimpleController {
   }
 }
 
-module.exports = SimpleController;
+export default SimpleController;
