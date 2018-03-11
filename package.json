@@ -6,30 +6,24 @@
   "bin": {
     "hot-controller": "./bin/cli.js"
   },
-  "files": [
-    "bin/",
-    "lib/",
-    "src/",
-    "index.js"
-  ],
+  "files": ["bin/", "lib/", "src/", "index.js"],
   "scripts": {
     "lint": "eslint src",
-    "test": "npm-run-all lint build test:build test:ci",
+    "test": "npm-run-all lint build test:build test:build-plugins test:ci",
     "test:build": "node tests/build.js",
     "test:ci": "jest --config=tests/jest.config.js",
-    "test:simple": "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
-    "build": "babel src -d lib",
+    "test:simple":
+      "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
+    "test:build-plugins":
+      "rimraf tests/__tests__/plugins/plugins/dist && babel tests/__tests__/plugins/plugins -d tests/__tests__/plugins/plugins/dist",
+    "build": "rimraf lib && babel src -d lib",
     "prepare": "yarn build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hot-controller/hot-controller.git"
   },
-  "keywords": [
-    "express",
-    "controller",
-    "hmr"
-  ],
+  "keywords": ["express", "controller", "hmr"],
   "author": "Philip Andersson <philipodev@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -46,6 +40,7 @@
     "eslint-plugin-jest": "^21.13.0",
     "jest": "^22.4.2",
     "jest-environment-node": "^22.4.1",
+    "rimraf": "^2.6.2",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
   },
@@ -64,7 +59,7 @@
     "promise-events": "^0.1.4",
     "recursive-readdir": "^2.2.2",
     "shuri": "^1.0.1",
-    "webpack": "^4.1.0",
+    "webpack": "^4.1.1",
     "webpack-sources": "^1.1.0"
   }
 }

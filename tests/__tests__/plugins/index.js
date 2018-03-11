@@ -8,7 +8,7 @@ describe('Simple plugins', () => {
         return addMiddleware(global.__APP__, __dirname, {
           // send reference to plugin so it can assign it the emitter
           plugins: [
-            require('./plugins/simple')(_emitter => (emitter = _emitter))
+            require('./plugins/dist/simple')(_emitter => (emitter = _emitter))
           ]
         }).then(() => {
           resolve();
