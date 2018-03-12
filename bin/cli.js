@@ -54,7 +54,7 @@ function serve(options, _dev = false) {
     const { port = 3000 } = options;
     const server = require('./server');
 
-    server({ port });
+    server({ port, dev: _dev });
   } catch (e) {
     throw e;
   }
