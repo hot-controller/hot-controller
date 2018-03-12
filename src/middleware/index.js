@@ -28,7 +28,11 @@ module.exports = function(
 
     if (dev) {
       const ControllerCompiler = require('../build');
-      const compiler = new ControllerCompiler({ controllerDir, outputDir });
+      const compiler = new ControllerCompiler({
+        controllerDir,
+        outputDir,
+        plugins
+      });
       controllerManager.setCompiler(compiler);
 
       compiler.watch(function(err) {

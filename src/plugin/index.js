@@ -1,5 +1,5 @@
 const EventEmitter = require('promise-events');
-
+const { resolve } = require('path');
 const PLUGIN_PREFIX = 'hot-controller-plugin-';
 
 class PluginManager {
@@ -17,7 +17,9 @@ class PluginManager {
       if (typeof plugin === 'string') {
         // check if string starts with dot or slash
         if (plugin.length > 2 && (plugin[0] === '.' || plugin[0] === '/')) {
-          pluginClasses.push(require(require.resolve(plugin)));
+          pluginClasses.push(
+            require(require.resolve(resolve(process.cwd(), plugin)))
+          );
         } else if (plugin.length > PLUGIN_PREFIX.length) {
           pluginClasses.push(require(plugin));
         } else {
@@ -52,6 +54,10 @@ class PluginManager {
 
   emitAfterControllers(controllerMap) {
     this.emit('after-controllers', this.router, controllerMap);
+  }
+
+  emitWebpackConfig(config) {
+    this.emit('webpack-config', config);
   }
 
   emit(event, ...args) {
