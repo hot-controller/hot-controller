@@ -23,6 +23,13 @@ program.command('init').action(function(options) {
   require('./commands/init')(options);
 });
 
+program
+  .command('build <dir>')
+  .option('-o, --output <dir>', 'Output directory')
+  .action(function(dir, options) {
+    require('./commands/build')(dir, options);
+  });
+
 program.command('build').action(function() {});
 
 // make "dev" the default command
