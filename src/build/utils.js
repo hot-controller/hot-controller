@@ -1,6 +1,7 @@
 const recursive = require('recursive-readdir');
 const path = require('path');
 const fs = require('fs');
+const buildConfigChain = require('babel-core/lib/transformation/file/options/build-config-chain');
 const ControllerError = require('../error');
 
 function getEntriesFromDir(dir) {
@@ -29,4 +30,18 @@ function getEntriesFromDir(dir) {
   });
 }
 
-module.exports = { getEntriesFromDir };
+function findBabelConfig(dir) {
+  // We need to provide a location of a filename inside the `dir`.
+  // For the name of the file, we could be provide anything.
+  const fileName = path.join(dir, 'filename.js');
+  const options = { babelrc: true, fileName };
+
+  // First We need to build the config chain.
+  // Then we need to remove the config item with the location as "base".
+  // That's the config we are passing as the "options" below
+  const configList = buildConfigChain(options).filter(i => i.loc !== 'base');
+
+  return configList[0];
+}
+
+module.exports = { getEntriesFromDir, findBabelConfig };
