@@ -1,8 +1,4 @@
-### This is a
-- [ ] 🐛 bug report
-- [ ] 🔥 feature request
-<!-- put an `x` above on correct issue type-->
-<!-- example: [x] 🐛 bug report -->
+### This is a: 🐛 bug report or ⚡️ feature request?
 
 <!-- You can erase any parts of this template not applicable to your Issue. -->
 
