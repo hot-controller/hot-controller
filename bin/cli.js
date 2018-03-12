@@ -23,6 +23,13 @@ program.command('init').action(function(options) {
   require('./commands/init')(options);
 });
 
+program
+  .command('build <dir>')
+  .option('-o, --output <dir>', 'Output directory')
+  .action(function(dir, options) {
+    require('./commands/build')(dir, options);
+  });
+
 program.command('build').action(function() {});
 
 // make "dev" the default command
@@ -47,7 +54,7 @@ function serve(options, _dev = false) {
     const { port = 3000 } = options;
     const server = require('./server');
 
-    server({ port });
+    server({ port, dev: _dev });
   } catch (e) {
     throw e;
   }

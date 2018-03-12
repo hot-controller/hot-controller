@@ -12,11 +12,11 @@
     "test": "npm-run-all lint build test:build test:build-plugins test:ci",
     "test:build": "node tests/build.js",
     "test:ci": "jest --config=tests/jest.config.js",
-    "test:simple":
-      "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
     "test:build-plugins":
       "rimraf tests/__tests__/plugins/plugins/dist && babel tests/__tests__/plugins/plugins -d tests/__tests__/plugins/plugins/dist",
     "build": "rimraf lib && babel src -d lib",
+    "test:simple":
+      "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
     "prepare": "yarn build"
   },
   "repository": {
@@ -54,10 +54,12 @@
     "commander": "^2.15.0",
     "express": "^4.16.2",
     "lodash": "^4.17.5",
+    "memory-fs": "^0.4.1",
     "mkdirp": "^0.5.1",
     "npm-run-all": "^4.1.2",
     "promise-events": "^0.1.4",
     "recursive-readdir": "^2.2.2",
+    "require-from-string": "^2.0.1",
     "shuri": "^1.0.1",
     "webpack": "^4.1.1",
     "webpack-sources": "^1.1.0"

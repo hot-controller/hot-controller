@@ -11,13 +11,13 @@ module.exports = class ControllerPlugin {
       let { assets } = compilation;
 
       const indexSource = new RawSource(
-        'module.exports = {};' +
+        'const path = require("path");\n\nmodule.exports = {};' +
           Object.keys(assets)
             .map(assetName => {
               const ccAssetName = capitalizeFirstLetter(
                 camelCase(assetName.replace('.js', ''))
               );
-              return `const ${ccAssetName}Path = require.resolve('./${assetName}'); module.exports.${ccAssetName} = [require(${ccAssetName}Path), ${ccAssetName}Path];`;
+              return `module.exports.${ccAssetName} = path.resolve(__dirname, './${assetName}');`;
             })
             .join('\n')
       );
