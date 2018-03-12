@@ -18,6 +18,7 @@ module.exports = function(callback, cwd = process.cwd()) {
     if (dev) {
       const ControllerCompiler = require('../build');
       const compiler = new ControllerCompiler({ controllerDir, outputDir });
+      controllerManager.setCompiler(compiler);
 
       compiler.watch(function(err) {
         if (err === null) {
