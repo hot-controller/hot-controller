@@ -1,11 +1,14 @@
 const ControllerError = require('./error');
 const Controller = require('./controller');
+const requireFromString = require('require-from-string');
+const { resolve } = require('path');
 
 class ControllerManager {
   constructor(router, { outputDir }) {
     this.controllerMap = new ControllerMap();
     this.router = router;
     this.outputDir = outputDir;
+    this.compiler = null;
   }
 
   reload() {
@@ -18,12 +21,26 @@ class ControllerManager {
     return this.getControllers();
   }
 
+  setCompiler(compiler) {
+    this.compiler = compiler;
+  }
+
+  require(path) {
+    if (this.compiler === null) {
+      return require(path);
+    } else {
+      return requireFromFS(this.compiler.fs, path);
+    }
+  }
+
   stackRouter() {
     // clear the stack
     this.router.stack = [];
     this.rootPathMap = new Map();
 
-    this.getControllers().forEach(controllerClass => {
+    this.getControllers().forEach(controllerPath => {
+      const controllerClass = this.require(controllerPath);
+
       if (typeof controllerClass === 'function') {
         const controller = new Controller(controllerClass);
         if (this.rootPathMap.has(controller.__path)) {
@@ -46,32 +63,32 @@ class ControllerManager {
 
   getControllers() {
     const controllers = [];
-    this.controllerMap.forEach(([fn]) => {
-      controllers.push(fn);
+    this.controllerMap.forEach(path => {
+      controllers.push(path);
     });
 
     return controllers;
   }
 
   loadControllers() {
-    // first clear the node require cache
-    this.clearControllerCache();
+    let controllers;
+    if (this.compiler === null) {
+      controllers = require(require.resolve(this.outputDir));
+    } else {
+      controllers = requireFromFS(
+        this.compiler.fs,
+        resolve(this.outputDir, 'index.js')
+      );
+    }
 
-    let controllers = require(require.resolve(this.outputDir));
     for (let controllerName in controllers) {
       this.controllerMap.set(controllerName, controllers[controllerName]);
     }
   }
+}
 
-  clearControllerCache() {
-    if (this.controllerMap.size > 0) {
-      this.controllerMap.forEach(([, path]) => {
-        delete require.cache[path];
-      });
-
-      delete require.cache[require.resolve(this.outputDir)];
-    }
-  }
+function requireFromFS(fs, path) {
+  return requireFromString(fs.readFileSync(path, 'utf-8'), path);
 }
 
 class ControllerMap extends Map {}

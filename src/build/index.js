@@ -6,12 +6,14 @@ const chokidar = require('chokidar');
 const logger = require('../logger');
 const { relative } = require('path');
 const chalk = require('chalk').default;
+const MemoryFS = require('memory-fs');
 
 class ControllerCompiler {
   constructor({ controllerDir, outputDir }) {
     this.controllerDir = controllerDir;
     this.outputDir = outputDir;
     this.webpackCompiler = null;
+    this.fs = new MemoryFS();
   }
 
   close() {
@@ -33,9 +35,10 @@ class ControllerCompiler {
       this.webpackWatch(cb).then(watcher => {
         webpackWatcher = watcher;
         const { compiler } = watcher;
-        compiler.plugin('done', () =>
-          logger.clear('Controllers compiled and hot reloaded')
-        );
+        compiler.outputFileSystem = this.fs;
+        compiler.plugin('done', () => {
+          logger.clear('Controllers compiled and 🔥 hot reloaded');
+        });
         compiler.plugin('compile', () => logger('Compiling...'));
       });
 
