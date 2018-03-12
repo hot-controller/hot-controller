@@ -26,7 +26,7 @@ class ControllerManager {
   }
 
   require(path) {
-    if (this.compiler.fs === null) {
+    if (this.compiler === null) {
       return require(path);
     } else {
       return requireFromFS(this.compiler.fs, path);
@@ -72,13 +72,13 @@ class ControllerManager {
 
   loadControllers() {
     let controllers;
-    if (this.compiler.fs) {
+    if (this.compiler === null) {
+      controllers = require(require.resolve(this.outputDir));
+    } else {
       controllers = requireFromFS(
         this.compiler.fs,
         resolve(this.outputDir, 'index.js')
       );
-    } else {
-      controllers = require(require.resolve(this.outputDir));
     }
 
     for (let controllerName in controllers) {
