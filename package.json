@@ -62,6 +62,7 @@
     "chokidar": "^2.0.2",
     "commander": "^2.15.0",
     "express": "^4.16.2",
+    "find-babel-config": "^1.1.0",
     "lodash": "^4.17.5",
     "memory-fs": "^0.4.1",
     "mkdirp": "^0.5.1",

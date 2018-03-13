@@ -2,7 +2,7 @@
 /* eslint-disable indent */
 
 const path = require('path');
-const { getEntriesFromDir, findBabelConfig } = require('./utils');
+const { getEntriesFromDir, babelConfig } = require('./utils');
 const ControllerPlugin = require('./plugins/controller');
 const fs = require('fs');
 const THIS_ROOT = path.resolve(__dirname, '../..');
@@ -12,32 +12,6 @@ const node_modules = (function() {
 
   return project.concat(local);
 })();
-
-function babelConfig(dir) {
-  const defaultBabelOptions = {
-    cacheDirectory: true,
-    presets: [],
-    plugins: [require.resolve('babel-plugin-transform-decorators-legacy')]
-  };
-
-  const externalBabelConfig = findBabelConfig(dir);
-  if (externalBabelConfig) {
-    // It's possible to turn off babelrc support via babelrc itself.
-    // In that case, we should add our default preset.
-    // That's why we need to do this.
-    const { options } = externalBabelConfig;
-    defaultBabelOptions.babelrc = options.babelrc !== false;
-  } else {
-    defaultBabelOptions.babelrc = false;
-  }
-
-  // Add our default preset if the no "babelrc" found.
-  if (!defaultBabelOptions.babelrc) {
-    defaultBabelOptions.presets.push(require.resolve('./preset'));
-  }
-
-  return defaultBabelOptions;
-}
 
 module.exports = async function({
   watch = false,

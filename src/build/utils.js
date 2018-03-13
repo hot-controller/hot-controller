@@ -1,8 +1,8 @@
 const recursive = require('recursive-readdir');
 const path = require('path');
 const fs = require('fs');
-const buildConfigChain = require('babel-core/lib/transformation/file/options/build-config-chain');
 const ControllerError = require('../error');
+const findBabelConfig = require('find-babel-config');
 
 function getEntriesFromDir(dir) {
   return new Promise((resolve, reject) => {
@@ -30,18 +30,30 @@ function getEntriesFromDir(dir) {
   });
 }
 
-function findBabelConfig(dir) {
-  // We need to provide a location of a filename inside the `dir`.
-  // For the name of the file, we could be provide anything.
-  const fileName = path.join(dir, 'filename.js');
-  const options = { babelrc: true, fileName };
+function babelConfig(dir) {
+  const defaultBabelOptions = {
+    cacheDirectory: true,
+    presets: [],
+    plugins: [require.resolve('babel-plugin-transform-decorators-legacy')]
+  };
 
-  // First We need to build the config chain.
-  // Then we need to remove the config item with the location as "base".
-  // That's the config we are passing as the "options" below
-  const configList = buildConfigChain(options).filter(i => i.loc !== 'base');
+  const externalBabelConfig = findBabelConfig.sync(dir);
+  if (externalBabelConfig) {
+    // It's possible to turn off babelrc support via babelrc itself.
+    // In that case, we should add our default preset.
+    // That's why we need to do this.
+    const { options = {} } = externalBabelConfig;
+    defaultBabelOptions.babelrc = options.babelrc !== false;
+  } else {
+    defaultBabelOptions.babelrc = false;
+  }
 
-  return configList[0];
+  // Add our default preset if the no "babelrc" found.
+  if (!defaultBabelOptions.babelrc) {
+    defaultBabelOptions.presets.push(require.resolve('./preset'));
+  }
+
+  return defaultBabelOptions;
 }
 
-module.exports = { getEntriesFromDir, findBabelConfig };
+module.exports = { getEntriesFromDir, babelConfig };
