@@ -1,9 +1,9 @@
-const recursive = require("recursive-readdir");
-const path = require("path");
-const fs = require("fs");
-const ControllerError = require("../error");
-const findBabelConfig = require("find-babel-config");
-const logger = require("../logger");
+const recursive = require('recursive-readdir');
+const path = require('path');
+const fs = require('fs');
+const ControllerError = require('../error');
+const findBabelConfig = require('find-babel-config');
+const logger = require('../logger');
 
 function getEntriesFromDir(dir) {
   return new Promise((resolve, reject) => {
@@ -20,9 +20,9 @@ function getEntriesFromDir(dir) {
         const filePath = path.resolve(dir, file);
         entry[
           file
-            .replace(/\.[^/.]+$/, "")
-            .replace("\\", "/")
-            .replace("/", ".")
+            .replace(/\.[^/.]+$/, '')
+            .replace('\\', '/')
+            .replace('/', '.')
         ] = filePath;
       });
 
@@ -35,12 +35,12 @@ function babelConfig(dir) {
   const defaultBabelOptions = {
     cacheDirectory: true,
     presets: [],
-    plugins: [require.resolve("babel-plugin-transform-decorators-legacy")]
+    plugins: [require.resolve('babel-plugin-transform-decorators-legacy')]
   };
 
   const { file, config } = findBabelConfig.sync(dir);
   if (file) {
-    if (process.env.NODE_ENV !== "test") {
+    if (process.env.NODE_ENV !== 'test') {
       logger(`Using external .babelrc at location: ${file}`);
     }
 
@@ -55,7 +55,7 @@ function babelConfig(dir) {
 
   // Add our default preset if the no "babelrc" found.
   if (!defaultBabelOptions.babelrc) {
-    defaultBabelOptions.presets.push(require.resolve("./preset"));
+    defaultBabelOptions.presets.push(require.resolve('./preset'));
   }
 
   return defaultBabelOptions;

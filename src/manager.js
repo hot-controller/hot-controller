@@ -1,7 +1,7 @@
-const ControllerError = require("./error");
-const Controller = require("./controller");
-const requireFromString = require("require-from-string");
-const { resolve } = require("path");
+const ControllerError = require('./error');
+const Controller = require('./controller');
+const requireFromString = require('require-from-string');
+const { resolve } = require('path');
 
 class ControllerManager {
   constructor(router, plugins, { distDir }) {
@@ -40,7 +40,7 @@ class ControllerManager {
     this.getControllers().forEach(controllerPath => {
       const controllerClass = this.require(controllerPath);
 
-      if (typeof controllerClass === "function") {
+      if (typeof controllerClass === 'function') {
         const controller = new Controller(controllerClass);
         if (this.rootPathMap.has(controller.__path)) {
           throw new ControllerError(
@@ -78,7 +78,7 @@ class ControllerManager {
     } else {
       controllers = requireFromFS(
         this.compiler.fs,
-        resolve(this.distDir, "index.js")
+        resolve(this.distDir, 'index.js')
       );
     }
 
@@ -89,7 +89,7 @@ class ControllerManager {
 }
 
 function requireFromFS(fs, path) {
-  return requireFromString(fs.readFileSync(path, "utf-8"), path);
+  return requireFromString(fs.readFileSync(path, 'utf-8'), path);
 }
 
 class ControllerMap extends Map {}

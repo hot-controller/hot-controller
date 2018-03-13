@@ -1,10 +1,10 @@
-const express = require("express");
-const path = require("path");
-const ControllerManager = require("../manager");
-const getOptions = require("./options");
-const PluginManager = require("../plugin");
+const express = require('express');
+const path = require('path');
+const ControllerManager = require('../manager');
+const getOptions = require('./options');
+const PluginManager = require('../plugin');
 const dev =
-  process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "test";
+  process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
 
 module.exports = function(
   middlewareOptions = {},
@@ -27,7 +27,7 @@ module.exports = function(
     });
 
     if (dev) {
-      const ControllerCompiler = require("../build");
+      const ControllerCompiler = require('../build');
       const compiler = new ControllerCompiler({
         controllerDir,
         distDir,
