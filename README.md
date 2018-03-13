@@ -64,12 +64,12 @@ All files in this directory will be parsed as a controller with `hot-controller`
 ```js
 const { Controller, Route } = require('hot-controller');
 
-// tell us this is a controller and on what root-path it should control.
-@Controller('/')
+// which path it should reside on
+@Controller('/api')
 export default class HomeController {
   // declare your methods below
 
-  @Route.GET('/')
+  @Route.GET('/') // matches /api
   index(req, res) {
     //
     res.send('Welcome');
@@ -81,7 +81,7 @@ export default class HomeController {
     res.redirect('/somewhere-else');
   }
 
-  @Route.GET('/users/:id')
+  @Route.GET('/users/:id') // matches /api/users/:id
   async user(req, res) {
     // this is a async method
     const user = await getUserById(req.params.id); // get the user data
@@ -115,11 +115,11 @@ There are many ways to configure hot-controller:
   "dir": ""
 
   /**
-   * output directory of compiled controllers
+   * output directory of production compiled controllers
    * type: string
    * default: ./dist/controllers
    */
-  "outputDir": ""
+  "distDir": ""
 }
 ```
 
@@ -130,7 +130,7 @@ There are many ways to configure hot-controller:
     ```json
     {
       "dir": "./api",
-      "outputDir": "/dist/api-controllers"
+      "distDir": "/dist/api-controllers"
     }
     ```
 
@@ -142,7 +142,7 @@ There are many ways to configure hot-controller:
 
       "controllers": {
         "dir": "./api",
-        "outputDir": "/dist/api-controllers"
+        "distDir": "/dist/api-controllers"
       },
 
       ...
