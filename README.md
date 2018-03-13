@@ -17,14 +17,30 @@
 * 🍾 `async`/`await` support
 * ⚙️ Use as middleware with `express` or standalone.
 
-# Getting started
+### TOC
+
+- [How to use](#hot-to-use)
+  - [Setup](#setup)
+    - [CLI](#cli)
+    - [Locally in project](#locally-in-project)
+    - [With existing `express` application](#with-existing-express-application)
+  - [Controllers](#controllers)
+    - [Example](#example)
+  - [Configuration](#configuration) (optional)
+    - [Options](#options)
+    - [Config examples](#examples)
+
+# Setup
 
 ## Installation
 
 ### CLI
 
 `npm install -g hot-controller`
-or `yarn global add hot-controller`
+
+or
+
+`yarn global add hot-controller`
 
 ### Locally in project
 
@@ -53,7 +69,7 @@ or `yarn global add hot-controller`
 
 # Controllers
 
-Create a directory in the root of your project called `/controllers`
+Create a directory in the root of your project called `controllers`
 
 All files in this directory will be parsed as a controller with `hot-controller`.
 
