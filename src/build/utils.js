@@ -2,6 +2,8 @@ const recursive = require('recursive-readdir');
 const path = require('path');
 const fs = require('fs');
 const ControllerError = require('../error');
+const findBabelConfig = require('find-babel-config');
+const logger = require('../logger');
 
 function getEntriesFromDir(dir) {
   return new Promise((resolve, reject) => {
@@ -29,4 +31,32 @@ function getEntriesFromDir(dir) {
   });
 }
 
-module.exports = { getEntriesFromDir };
+function babelConfig(dir) {
+  const defaultBabelOptions = {
+    cacheDirectory: true,
+    presets: [],
+    plugins: [require.resolve('babel-plugin-transform-decorators-legacy')]
+  };
+
+  const { file, config } = findBabelConfig.sync(dir);
+  if (file) {
+    logger(`Using external .babelrc at location: ${file}`);
+
+    // It's possible to turn off babelrc support via babelrc itself.
+    // In that case, we should add our default preset.
+    // That's why we need to do this.
+    const { options = {} } = config;
+    defaultBabelOptions.babelrc = options.babelrc !== false;
+  } else {
+    defaultBabelOptions.babelrc = false;
+  }
+
+  // Add our default preset if the no "babelrc" found.
+  if (!defaultBabelOptions.babelrc) {
+    defaultBabelOptions.presets.push(require.resolve('./preset'));
+  }
+
+  return defaultBabelOptions;
+}
+
+module.exports = { getEntriesFromDir, babelConfig };
