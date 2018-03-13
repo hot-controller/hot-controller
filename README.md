@@ -3,12 +3,12 @@
 </p>
 
 [![Travis CI Build Status](https://travis-ci.org/hot-controller/hot-controller.svg?branch=master)](https://travis-ci.org/hot-controller/hot-controller)
-[![Travis CI Linux Build Status](https://img.shields.io/travis/hot-controller/hot-controller/master.svg?label=linux)](https://travis-ci.org/hot-controller/hot-controller)
 [![npm](https://img.shields.io/npm/v/hot-controller.svg)](https://www.npmjs.com/package/hot-controller)
 [![David Dependancy Status](https://david-dm.org/hot-controller/hot-controller.svg)](https://david-dm.org/hot-controller/hot-controller)
 [![npm](https://img.shields.io/npm/l/hot-controller.svg)](https://github.com/hot-controller/hot-controller/blob/master/LICENSE)
 [![Greenkeeper badge](https://badges.greenkeeper.io/hot-controller/hot-controller.svg)](https://greenkeeper.io/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/hot-controller/hot-controller/blob/master/CONTRIBUTING.md)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 # Features [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?text=&url=https://github.com/hot-controller/hot-controller&hashtags=nodejs,express,controller)
 
@@ -19,16 +19,20 @@
 
 ### TOC
 
-- [How to use](#hot-to-use)
-  - [Setup](#setup)
-    - [CLI](#cli)
-    - [Locally in project](#locally-in-project)
-    - [With existing `express` application](#with-existing-express-application)
-  - [Controllers](#controllers)
-    - [Example](#example)
-  - [Configuration](#configuration) (optional)
-    - [Options](#options)
-    - [Config examples](#examples)
+* [How to use](#hot-to-use)
+
+  * [Setup](#setup)
+    * [CLI](#cli)
+    * [Locally in project](#locally-in-project)
+    * [With existing `express` application](#with-existing-express-application)
+  * [Controllers](#controllers)
+    * [Example](#example)
+  * [Configuration](#configuration) (optional)
+
+    * [Options](#options)
+    * [Config examples](#examples)
+
+  * [Contributors](#contributors)
 
 # Setup
 
@@ -167,3 +171,17 @@ There are many ways to configure hot-controller:
       }
     }
     ```
+
+# Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
+<!-- prettier-ignore -->
+| [<img src="https://avatars2.githubusercontent.com/u/28024000?v=4" width="100px;"/><br /><sub><b>Philip Oliver</b></sub>](https://twitter.com/philipodev)<br />[💻](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Code") [📖](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Documentation") [🤔](#ideas-philipodev "Ideas, Planning, & Feedback") [👀](#review-philipodev "Reviewed Pull Requests") [⚠️](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Tests") [🔧](#tool-philipodev "Tools") |
+| :---: |
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
