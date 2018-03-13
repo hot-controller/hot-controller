@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const ControllerError = require('../error');
 const findBabelConfig = require('find-babel-config');
+const logger = require('../logger');
 
 function getEntriesFromDir(dir) {
   return new Promise((resolve, reject) => {
@@ -37,12 +38,14 @@ function babelConfig(dir) {
     plugins: [require.resolve('babel-plugin-transform-decorators-legacy')]
   };
 
-  const externalBabelConfig = findBabelConfig.sync(dir);
-  if (externalBabelConfig) {
+  const { file, config } = findBabelConfig.sync(dir);
+  if (file) {
+    logger(`Using external .babelrc at location: ${file}`);
+
     // It's possible to turn off babelrc support via babelrc itself.
     // In that case, we should add our default preset.
     // That's why we need to do this.
-    const { options = {} } = externalBabelConfig;
+    const { options = {} } = config;
     defaultBabelOptions.babelrc = options.babelrc !== false;
   } else {
     defaultBabelOptions.babelrc = false;
