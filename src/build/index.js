@@ -9,10 +9,11 @@ const chalk = require('chalk').default;
 const MemoryFS = require('memory-fs');
 
 class ControllerCompiler {
-  constructor({ controllerDir, outputDir }) {
+  constructor({ controllerDir, outputDir, plugins }) {
     this.controllerDir = controllerDir;
     this.outputDir = outputDir;
     this.webpackCompiler = null;
+    this.plugins = plugins;
     this.fs = new MemoryFS();
   }
 
@@ -71,24 +72,25 @@ class ControllerCompiler {
   }
 
   async runWebpack(watch = false, cb) {
-    return (this.webpackCompiler = webpack(
-      await config({
-        watch,
-        controllerDir: this.controllerDir,
-        outputDir: this.outputDir
-      }),
-      (err, stats) => {
-        if (stats.hasErrors()) {
-          console.log(
-            stats.toString({
-              colors: true
-            })
-          );
-        }
+    let webpackConfig = await config({
+      watch,
+      controllerDir: this.controllerDir,
+      outputDir: this.outputDir
+    });
 
-        cb(err, stats);
+    await this.plugins.emitWebpackConfig(webpackConfig);
+
+    return (this.webpackCompiler = webpack(webpackConfig, (err, stats) => {
+      if (stats.hasErrors()) {
+        console.log(
+          stats.toString({
+            colors: true
+          })
+        );
       }
-    ));
+
+      cb(err, stats);
+    }));
   }
 }
 

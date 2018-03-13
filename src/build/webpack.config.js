@@ -2,7 +2,7 @@
 /* eslint-disable indent */
 
 const path = require('path');
-const { getEntriesFromDir } = require('./utils');
+const { getEntriesFromDir, babelConfig } = require('./utils');
 const ControllerPlugin = require('./plugins/controller');
 const fs = require('fs');
 const THIS_ROOT = path.resolve(__dirname, '../..');
@@ -60,22 +60,7 @@ module.exports = async function({
           exclude: /(node_modules|bower_components)/,
           use: {
             loader: 'babel-loader',
-            options: {
-              babelrc: false,
-              presets: [
-                [
-                  require('babel-preset-env'),
-                  {
-                    targets: {
-                      node: '6'
-                    }
-                  }
-                ]
-              ],
-              plugins: [
-                require('babel-plugin-transform-decorators-legacy').default
-              ]
-            }
+            options: babelConfig(controllerDir)
           }
         }
       ]

@@ -3,11 +3,15 @@ const { findConfig, loadConfig } = require('shuri');
 const configName = '.controllersrc';
 const pkgField = 'controllers';
 
-function getOptions(cwd = process.cwd()) {
-  const defaultConfig = {
-    distDir: 'dist/controllers',
-    dir: 'controllers'
-  };
+function getOptions(cwd = process.cwd(), options = {}) {
+  const defaultConfig = Object.assign(
+    {},
+    {
+      distDir: 'dist/controllers',
+      dir: 'controllers'
+    },
+    options
+  );
 
   return new Promise(resolve => {
     findConfig(cwd, { configName, pkgField }).then(configFile => {

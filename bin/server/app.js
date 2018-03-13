@@ -6,10 +6,14 @@ module.exports = function() {
     const app = express();
 
     app.use(
-      middleware(function(router, compiler, options) {
-        app.__hotControllerOptions = options;
-        resolve(app);
-      }, process.cwd())
+      middleware(
+        {},
+        function(router, compiler, options) {
+          app.__hotControllerOptions = options;
+          resolve(app);
+        },
+        process.cwd()
+      )
     );
   });
 };

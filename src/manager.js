@@ -4,10 +4,11 @@ const requireFromString = require('require-from-string');
 const { resolve } = require('path');
 
 class ControllerManager {
-  constructor(router, { outputDir }) {
+  constructor(router, plugins, { outputDir }) {
     this.controllerMap = new ControllerMap();
     this.router = router;
     this.outputDir = outputDir;
+    this.plugins = plugins;
     this.compiler = null;
   }
 
@@ -34,8 +35,6 @@ class ControllerManager {
   }
 
   stackRouter() {
-    // clear the stack
-    this.router.stack = [];
     this.rootPathMap = new Map();
 
     this.getControllers().forEach(controllerPath => {
@@ -59,6 +58,8 @@ class ControllerManager {
         this.rootPathMap.set(controller.path, controller);
       }
     });
+
+    this.plugins.emitAfterControllers(this.rootPathMap);
   }
 
   getControllers() {

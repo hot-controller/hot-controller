@@ -1,14 +1,18 @@
 const middleware = require('../lib/middleware');
 
-function addMiddleware(app, dir) {
+function addMiddleware(app, dir, options = {}) {
   return new Promise(resolve => {
     app.use(
-      middleware((router, compiler = null) => {
-        if (compiler !== null) {
-          (global.__COMPILERS__ || []).push(compiler);
-        }
-        resolve(app);
-      }, dir)
+      middleware(
+        options,
+        (router, compiler = null) => {
+          if (compiler !== null) {
+            (global.__COMPILERS__ || []).push(compiler);
+          }
+          resolve(app);
+        },
+        dir
+      )
     );
   });
 }
