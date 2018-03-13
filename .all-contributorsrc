@@ -1,0 +1,26 @@
+{
+  "projectName": "hot-controller",
+  "projectOwner": "hot-controller",
+  "repoType": "github",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "philipodev",
+      "name": "Philip Oliver",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/28024000?v=4",
+      "profile": "https://twitter.com/philipodev",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas",
+        "review",
+        "test",
+        "tool"
+      ]
+    }
+  ]
+}

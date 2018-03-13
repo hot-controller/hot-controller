@@ -18,7 +18,10 @@
     "test:simple":
       "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
     "prepare": "yarn build",
-    "precommit": "npm run lint && lint-staged"
+    "precommit": "npm run lint && lint-staged",
+    "contributors:add": "all-contributors add",
+    "contributors:init": "all-contributors init",
+    "contributors:generate": "all-contributors generate"
   },
   "repository": {
     "type": "git",
@@ -38,6 +41,7 @@
   },
   "homepage": "https://github.com/hot-controller/hot-controller#readme",
   "devDependencies": {
+    "all-contributors-cli": "^4.11.1",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "eslint": "^4.18.2",
@@ -45,9 +49,9 @@
     "husky": "^0.15.0-rc.9",
     "jest": "^22.4.2",
     "jest-environment-node": "^22.4.1",
-    "rimraf": "^2.6.2",
     "lint-staged": "^7.0.0",
     "prettier": "^1.11.1",
+    "rimraf": "^2.6.2",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
   },
