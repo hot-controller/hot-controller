@@ -6,30 +6,26 @@
   "bin": {
     "hot-controller": "./bin/cli.js"
   },
-  "files": [
-    "bin/",
-    "lib/",
-    "src/",
-    "index.js"
-  ],
+  "files": ["bin/", "lib/", "src/", "index.js"],
   "scripts": {
     "lint": "eslint src",
     "test": "npm-run-all lint build test:build test:ci",
     "test:build": "node tests/build.js",
     "test:ci": "jest --config=tests/jest.config.js",
-    "test:simple": "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
+    "test:simple":
+      "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
     "build": "babel src -d lib",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "precommit": "npm run lint && lint-staged"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hot-controller/hot-controller.git"
   },
-  "keywords": [
-    "express",
-    "controller",
-    "hmr"
-  ],
+  "lint-staged": {
+    "*.{js,json,md}": ["prettier --write", "git add"]
+  },
+  "keywords": ["express", "controller", "hmr"],
   "author": "Philip Andersson <philipodev@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -44,8 +40,11 @@
     "babel-eslint": "^8.2.2",
     "eslint": "^4.18.2",
     "eslint-plugin-jest": "^21.13.0",
+    "husky": "^0.15.0-rc.9",
     "jest": "^22.4.2",
     "jest-environment-node": "^22.4.1",
+    "lint-staged": "^7.0.0",
+    "prettier": "^1.11.1",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0"
   },
