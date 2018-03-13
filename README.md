@@ -20,7 +20,6 @@
 ### TOC
 
 * [How to use](#hot-to-use)
-
   * [Setup](#setup)
     * [CLI](#cli)
     * [Locally in project](#locally-in-project)
@@ -28,10 +27,8 @@
   * [Controllers](#controllers)
     * [Example](#example)
   * [Configuration](#configuration) (optional)
-
     * [Options](#options)
     * [Config examples](#examples)
-
   * [Contributors](#contributors)
 
 # Setup
