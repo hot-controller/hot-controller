@@ -1,6 +1,6 @@
-const { Controller, Route } = require('../../../../src');
+const { Controller, Route } = require('../../src');
 /**
- * TestController
+ * SimpleController
  */
 
 @Controller('/simple')

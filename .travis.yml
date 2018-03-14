@@ -6,4 +6,5 @@ cache:
   yarn: true
 script:
   - yarn test
+  - codecov
 sudo: false

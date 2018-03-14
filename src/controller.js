@@ -1,6 +1,6 @@
 /* eslint-disable indent */
-
 const express = require('express');
+const { reformatRouteName } = require('./utils');
 
 class Controller {
   constructor(controllerClass) {
@@ -39,22 +39,6 @@ class Controller {
   connectRouter(router) {
     router.use(this.path, this.router);
   }
-}
-
-function reformatRouteName(route) {
-  if (route === '/') {
-    return route;
-  }
-
-  if (route[0] !== '/') {
-    route = '/' + route;
-  }
-
-  if (route.endsWith('/')) {
-    route = route.substring(0, route.length - 1);
-  }
-
-  return route;
 }
 
 module.exports = Controller;
