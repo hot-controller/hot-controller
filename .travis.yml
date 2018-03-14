@@ -5,6 +5,6 @@ node_js:
 cache:
   yarn: true
 script:
-  - yarn test
+  - yarn test:ci
   - codecov
 sudo: false

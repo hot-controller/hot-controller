@@ -10,14 +10,10 @@
   "scripts": {
     "lint": "eslint src",
     "test": "jest --config=jest.config.json",
-    "test:build": "node tests/build.js",
-    "test:ci": "jest",
-    "test:build-plugins":
-      "rimraf tests/__tests__/plugins/plugins/dist && babel tests/__tests__/plugins/plugins -d tests/__tests__/plugins/plugins/dist",
+    "test:lib": "jest --config=jest.lib.config.json",
+    "test:ci": "npm-run-all build build:fixtures test",
     "build": "rimraf lib && babel src -d lib",
     "build:fixtures": "node fixtures/build.js",
-    "test:simple":
-      "jest --config=tests/jest.config.js tests/__tests__/simple/index.js",
     "prepare": "yarn build",
     "precommit": "npm run lint && lint-staged",
     "contributors:add": "all-contributors add",
