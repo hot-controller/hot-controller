@@ -5,7 +5,7 @@ const { resolve } = require('path');
 
 class ControllerManager {
   constructor(router, plugins, { distDir }) {
-    this.controllerMap = new ControllerMap();
+    this.controllerMap = new Map();
     this.router = router;
     this.distDir = distDir;
     this.plugins = plugins;
@@ -13,6 +13,7 @@ class ControllerManager {
   }
 
   reload() {
+    this.router.stack = [];
     return this.load();
   }
 
@@ -42,7 +43,7 @@ class ControllerManager {
 
       if (typeof controllerClass === 'function') {
         const controller = new Controller(controllerClass);
-        if (this.rootPathMap.has(controller.__path)) {
+        if (this.rootPathMap.has(controller.path)) {
           throw new ControllerError(
             `${
               controller.controllerInstance.name
@@ -91,7 +92,5 @@ class ControllerManager {
 function requireFromFS(fs, path) {
   return requireFromString(fs.readFileSync(path, 'utf-8'), path);
 }
-
-class ControllerMap extends Map {}
 
 module.exports = ControllerManager;

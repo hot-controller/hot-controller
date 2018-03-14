@@ -13,12 +13,14 @@ class ControllerCompiler {
     this.controllerDir = controllerDir;
     this.distDir = distDir;
     this.webpackCompiler = null;
+    this.dirWatcher = null;
     this.plugins = plugins;
     this.fs = new MemoryFS();
   }
 
   close() {
     this.webpackCompiler.close();
+    this.dirWatcher.close();
   }
 
   build(cb) {
@@ -60,13 +62,13 @@ class ControllerCompiler {
       }
     };
 
-    const dirWatcher = chokidar.watch(this.controllerDir);
-    dirWatcher.on('add', build);
-    dirWatcher.on('addDir', build);
-    dirWatcher.on('unlink', build);
-    dirWatcher.on('unlinkDir', build);
-    dirWatcher.on('change', onChange);
-    dirWatcher.on('ready', () => {
+    this.dirWatcher = chokidar.watch(this.controllerDir);
+    this.dirWatcher.on('add', build);
+    this.dirWatcher.on('addDir', build);
+    this.dirWatcher.on('unlink', build);
+    this.dirWatcher.on('unlinkDir', build);
+    this.dirWatcher.on('change', onChange);
+    this.dirWatcher.on('ready', () => {
       webpackWatch(cb);
     });
   }

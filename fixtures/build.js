@@ -3,7 +3,7 @@ const ControllerCompiler = require('../lib/build');
 const PluginManager = require('../lib/plugin');
 const logger = require('../lib/logger');
 
-const PATHS = ['.'];
+const PATHS = ['.', './with-same-path'];
 
 (function() {
   logger('building for tests');
