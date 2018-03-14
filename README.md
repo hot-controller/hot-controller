@@ -6,7 +6,7 @@
 [![npm](https://img.shields.io/npm/v/hot-controller.svg)](https://www.npmjs.com/package/hot-controller)
 [![David Dependancy Status](https://david-dm.org/hot-controller/hot-controller.svg)](https://david-dm.org/hot-controller/hot-controller)
 [![npm](https://img.shields.io/npm/l/hot-controller.svg)](https://github.com/hot-controller/hot-controller/blob/master/LICENSE)
-[![Greenkeeper badge](https://badges.greenkeeper.io/hot-controller/hot-controller.svg)](https://greenkeeper.io/)
+[![codecov](https://codecov.io/gh/hot-controller/hot-controller/branch/master/graph/badge.svg)](https://codecov.io/gh/hot-controller/hot-controller)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/hot-controller/hot-controller/blob/master/CONTRIBUTING.md)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
