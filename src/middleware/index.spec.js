@@ -31,18 +31,22 @@ describe('middleware', () => {
     });
   });
 
-  it('compiles in dev', () => {
-    expect.assertions(1);
-    return new Promise(resolve => {
-      middleware(
-        { dev: true },
-        (router, compiler, options) => {
-          expect(compiler).toBeTruthy();
-          compiler.close();
-          resolve();
-        },
-        fixturesPath
-      );
-    });
-  });
+  it(
+    'compiles in dev',
+    () => {
+      expect.assertions(1);
+      return new Promise(resolve => {
+        middleware(
+          { dev: true },
+          (router, compiler, options) => {
+            expect(compiler).toBeTruthy();
+            compiler.close();
+            resolve();
+          },
+          fixturesPath
+        );
+      });
+    },
+    20000
+  );
 });
