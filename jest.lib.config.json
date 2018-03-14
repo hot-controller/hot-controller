@@ -1,5 +1,6 @@
 {
   "collectCoverage": true,
   "coveragePathIgnorePatterns": ["/node_modules/", "/fixtures/", "/src/"],
-  "verbose": true
+  "verbose": true,
+  "testEnvironment": "node"
 }
