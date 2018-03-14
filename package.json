@@ -1,7 +1,8 @@
 {
   "name": "hot-controller",
   "version": "1.0.0-alpha.5",
-  "description": "",
+  "description":
+    "hot-controller is a zero-config, hot-reloading controller library for node.js.",
   "main": "index.js",
   "bin": {
     "hot-controller": "./bin/cli.js"
@@ -18,7 +19,6 @@
     "prepare": "yarn build",
     "precommit": "npm run lint && lint-staged",
     "contributors:add": "all-contributors add",
-    "contributors:init": "all-contributors init",
     "contributors:generate": "all-contributors generate"
   },
   "repository": {
