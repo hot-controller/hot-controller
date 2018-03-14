@@ -8,7 +8,8 @@ function getOptions(cwd = process.cwd(), options = {}) {
     {},
     {
       distDir: 'dist/controllers',
-      dir: 'controllers'
+      dir: 'controllers',
+      cwd
     },
     options
   );

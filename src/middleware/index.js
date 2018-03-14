@@ -3,7 +3,7 @@ const path = require('path');
 const ControllerManager = require('../manager');
 const getOptions = require('./options');
 const PluginManager = require('../plugin');
-const dev =
+const envIsDev =
   process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
 
 module.exports = function(
@@ -13,6 +13,8 @@ module.exports = function(
 ) {
   const router = express.Router();
   const plugins = new PluginManager(router);
+
+  const { dev = envIsDev } = middlewareOptions;
 
   (async () => {
     const options = await getOptions(cwd, middlewareOptions);
@@ -38,7 +40,6 @@ module.exports = function(
       compiler.watch(function(err) {
         if (err === null) {
           // clear the stack
-          router.stack = [];
           plugins.emitBeforeControllers();
           controllerManager.reload();
           callback && callback(router, compiler, options);

@@ -1,0 +1,5 @@
+{
+  "collectCoverage": true,
+  "coveragePathIgnorePatterns": ["/node_modules/", "/fixtures/", "/lib/"],
+  "verbose": true
+}
