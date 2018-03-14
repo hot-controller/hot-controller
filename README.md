@@ -29,6 +29,7 @@
   * [Configuration](#configuration) (optional)
     * [Options](#options)
     * [Config examples](#examples)
+    * [Custom Babel Config](#custom-babel-config)
   * [Contributors](#contributors)
 
 # Setup
@@ -168,6 +169,22 @@ There are many ways to configure hot-controller:
       }
     }
     ```
+
+## Custom Babel Config
+
+`hot-controller` allows for custom `.babelrc` for your controllers. _This file is optional._
+
+In order to extend our usage of babel, you can simply define a `.babelrc` file at the root of your app or in your `controllers` directory.
+But we highly recommend you to use our preset (`hot-controller/babel`) in your `.babelrc`.
+
+Here's an example `.babelrc`:
+
+```json
+{
+  "presets": ["hot-controller/babel"],
+  "plugins": []
+}
+```
 
 # Contributors
 
