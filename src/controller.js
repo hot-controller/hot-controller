@@ -14,6 +14,7 @@ class Controller {
     this.router = express.Router();
     this.routes = this.controllerInstance.__routes || new Map();
 
+    this.setupHooks();
     this.initRouter();
   }
 
@@ -34,6 +35,37 @@ class Controller {
           : method.bind(this)
       );
     });
+  }
+
+  instanceHasMethod(methodName) {
+    return methodName in this.controllerInstance;
+  }
+
+  setupHooks() {
+    const hasBefore = this.instanceHasMethod('before');
+    const hasAfter = this.instanceHasMethod('after');
+
+    if (hasBefore || hasAfter) {
+      this.router.use((req, res, next) => {
+        if (hasAfter) {
+          res.on(
+            'finish',
+            this.controllerInstance.after.bind(this.controllerInstance)
+          );
+        }
+
+        if (hasBefore) {
+          this.controllerInstance.before.call(
+            this.controllerInstance,
+            req,
+            res,
+            next
+          );
+        } else {
+          next();
+        }
+      });
+    }
   }
 
   connectRouter(router) {

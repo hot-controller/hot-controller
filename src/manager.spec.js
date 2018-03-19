@@ -16,7 +16,7 @@ describe('ControllerManager', () => {
     });
 
     manager.loadControllers();
-    expect(manager.controllerMap.size).toBe(3);
+    expect(manager.controllerMap.size).toBe(4);
   });
 
   it('loads routers', () => {
@@ -26,9 +26,9 @@ describe('ControllerManager', () => {
     });
 
     manager.load();
-    expect(router.stack).toHaveLength(3);
+    expect(router.stack).toHaveLength(4);
     manager.reload();
-    expect(router.stack).toHaveLength(3);
+    expect(router.stack).toHaveLength(4);
   });
 
   it('prevents two controllers with same root path', () => {
