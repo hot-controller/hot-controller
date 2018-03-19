@@ -26,6 +26,12 @@
     * [With existing `express` application](#with-existing-express-application)
   * [Controllers](#controllers)
     * [Example](#example)
+  * [Plugins](#plugins)
+    * [Typescript](#typescript)
+    * [Write your own plugin](#write-your-own-plugin)
+  * [Hooks](#hooks)
+    * [Before](#before)
+    * [After](#after)
   * [Configuration](#configuration) (optional)
     * [Options](#options)
     * [Config examples](#examples)
@@ -108,6 +114,69 @@ export default class HomeController {
       user
     });
   }
+}
+```
+    
+# Plugins
+`hot-controller` fully supports plugins and is easily activatable in your config.
+
+We follow the "babel plugin naming scheme". (`hot-controller-plugin-[PLUGIN_NAME]`) and later in your `.controllersrc` (or what configuration method you're using) add `"plugins": [ "plugin-name" ]`
+
+## Typescript
+To write your controllers in `typescript` please checkout our very own plugin [hot-controller-plugin-typescript)(https://github.com/hot-controller/hot-controller-plugin-typescript)
+
+## Write your own plugin
+Writing a plugin for `hot-controller` is very simple. All it takes is a function.
+
+```javascript
+module.exports = function(events) {
+
+  events.on('webpack-config', (config) => {
+    // modify the webpack config for the controllers
+  });
+  
+  events.on('before-controller', (router) => {
+    // before any controllers will be loaded
+    // using "router" argument you can add plugin specific routes or add an express middleware. 
+  });
+  
+  events.on('after-controller', (router, controllers) => {
+    // after all controllers has been added to the router
+    // its now perfect time to add some error handlers or routes that will not conflict with controllers.
+  });
+  
+};
+
+```
+
+
+# Hooks
+Your controllers can be even more controlled via hooks. Read more below for `[before](#before)` and `[after](#after)`
+
+## Before
+
+```javascript
+class Controller {
+  
+   async before(req, res, next){
+     // check acl, push to logs or whatever needed to do before we continue the request
+     
+     next(); // dont forget this if you want to continue the request.
+   }
+   
+}
+```
+
+## After
+
+```javascript
+class Controller {
+  
+   after(){
+     // nothing more to do, 
+     // request already sent to client. but maybe you want to log something.
+   }
+   
 }
 ```
 
