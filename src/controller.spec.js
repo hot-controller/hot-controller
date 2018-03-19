@@ -88,4 +88,29 @@ describe('Controller', () => {
         done();
       });
   });
+
+  it('calls after hook', done => {
+    expect.assertions(3);
+
+    let cb = jest.fn();
+    HooksController.prototype.after = function() {
+      cb();
+    };
+
+    delete HooksController.prototype.before;
+
+    const mainRouter = express();
+    let controller = new Controller(HooksController);
+    controller.connectRouter(mainRouter);
+    controller.setupHooks();
+
+    request(mainRouter)
+      .get('/hooks')
+      .then(response => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe('/');
+        expect(cb).toHaveBeenCalledTimes(1);
+        done();
+      });
+  });
 });

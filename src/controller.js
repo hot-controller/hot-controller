@@ -50,7 +50,7 @@ class Controller {
         if (hasAfter) {
           res.on(
             'finish',
-            this.controllerInstance.bind(this.controllerInstance)
+            this.controllerInstance.after.bind(this.controllerInstance)
           );
         }
 
