@@ -5,6 +5,8 @@ const ControllerError = require('../error');
 const findBabelConfig = require('find-babel-config');
 const logger = require('../logger');
 
+const ALLOWED_EXTENSIONS = ['.js', '.ts', '.re'];
+
 function getEntriesFromDir(dir) {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(dir)) {
@@ -17,13 +19,15 @@ function getEntriesFromDir(dir) {
 
     recursive(dir, function(err, files) {
       files.map(file => file.substring(dir.length + 1)).forEach(file => {
-        const filePath = path.resolve(dir, file);
-        entry[
-          file
-            .replace(/\.[^/.]+$/, '')
-            .replace('\\', '/')
-            .replace('/', '.')
-        ] = filePath;
+        if (ALLOWED_EXTENSIONS.indexOf(path.extname(file)) >= 0) {
+          const filePath = path.resolve(dir, file);
+          entry[
+            file
+              .replace(/\.[^/.]+$/, '')
+              .replace('\\', '/')
+              .replace('/', '.')
+          ] = filePath;
+        }
       });
 
       resolve(entry);
