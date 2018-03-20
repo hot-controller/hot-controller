@@ -1,6 +1,6 @@
 {
   "name": "hot-controller",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "description":
     "hot-controller is a zero-config, hot-reloading controller library for node.js.",
   "main": "index.js",
