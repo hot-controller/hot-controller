@@ -24,10 +24,11 @@ program.command('init').action(function(options) {
 });
 
 program
-  .command('build <dir>')
+  .command('build')
   .option('-o, --output <dir>', 'Output directory')
-  .action(function(dir, options) {
-    require('./commands/build')(dir, options);
+  .option('-i, --input <dir>', 'Input directory')
+  .action(function(options) {
+    require('./commands/build')(options);
   });
 
 program.command('build').action(function() {});
