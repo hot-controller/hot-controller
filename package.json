@@ -7,7 +7,7 @@
   "bin": {
     "hot-controller": "./bin/cli.js"
   },
-  "files": ["bin/", "lib/", "src/", "index.js", "middleware.js"],
+  "files": ["bin", "lib", "src", "index.js", "middleware.js", "babel.js"],
   "scripts": {
     "lint": "eslint src",
     "test": "jest --config=jest.config.json",
