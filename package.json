@@ -16,7 +16,6 @@
     "build": "rimraf lib && babel src -d lib",
     "build:fixtures":
       "node fixtures/build.js && babel fixtures/plugins -d fixtures/dist/plugins",
-    "prepare": "yarn build",
     "precommit": "npm run lint && lint-staged",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
@@ -54,6 +53,10 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
+    "@babel/core": "^7.0.0-beta.42",
+    "@babel/plugin-proposal-decorators": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/register": "^7.0.0-beta.42",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",

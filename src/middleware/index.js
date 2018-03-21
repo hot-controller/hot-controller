@@ -5,6 +5,22 @@ const getOptions = require('./options');
 const PluginManager = require('../plugin');
 const envIsDev =
   process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
+require('@babel/register')({
+  presets: [
+    [
+      require.resolve('@babel/preset-env'),
+      {
+        targets: {
+          node: '6'
+        }
+      }
+    ]
+  ],
+  plugins: [
+    require.resolve('babel-plugin-transform-class-properties'),
+    require.resolve('@babel/plugin-proposal-decorators')
+  ]
+});
 
 module.exports = function(
   middlewareOptions = {},
@@ -22,28 +38,14 @@ module.exports = function(
     await plugins.loadPluginsFromOptions(options);
     plugins.emitBeforeControllers();
 
-    const distDir = path.resolve(cwd, options.distDir);
     const controllerDir = path.resolve(cwd, options.dir);
     const controllerManager = new ControllerManager(router, plugins, {
-      distDir
+      controllerDir
     });
 
     if (dev) {
-      const ControllerCompiler = require('../build');
-      const compiler = new ControllerCompiler({
-        controllerDir,
-        distDir,
-        plugins
-      });
-      controllerManager.setCompiler(compiler);
-
-      compiler.watch(function(err) {
-        if (err === null) {
-          // clear the stack
-          plugins.emitBeforeControllers();
-          controllerManager.reload();
-          callback && callback(router, compiler, options);
-        }
+      controllerManager.watch(() => {
+        callback && callback(router, null, options);
       });
     } else {
       controllerManager.load();

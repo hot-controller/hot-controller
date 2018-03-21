@@ -1,45 +1,67 @@
+const logger = require('./logger');
+
 const ControllerError = require('./error');
 const Controller = require('./controller');
-const requireFromString = require('require-from-string');
 const { resolve } = require('path');
+const recursive = require('recursive-readdir');
+const chokidar = require('chokidar');
 
 class ControllerManager {
-  constructor(router, plugins, { distDir }) {
+  constructor(router, plugins, { controllerDir }) {
     this.controllerMap = new Map();
     this.router = router;
-    this.distDir = distDir;
+    this.controllerDir = controllerDir;
     this.plugins = plugins;
-    this.compiler = null;
+
+    this.loadedFiles = [];
+    this.watcherReady = false;
   }
 
   reload() {
+    this.clearCache();
     this.router.stack = [];
-    return this.load();
+    this.load().then(() => {
+      if (this.watcherReady) {
+        logger('🔥 hot reloaded');
+      }
+    });
   }
 
-  load() {
-    this.loadControllers();
-    this.stackRouter();
-    return this.getControllers();
+  async watch() {
+    const reload = this.reload.bind(this);
+
+    this.dirWatcher = chokidar.watch(this.controllerDir);
+    this.dirWatcher.on('add', reload);
+    this.dirWatcher.on('addDir', reload);
+    this.dirWatcher.on('unlink', reload);
+    this.dirWatcher.on('unlinkDir', reload);
+    this.dirWatcher.on('change', reload);
+    this.dirWatcher.on('ready', () => {
+      logger('watcher ready');
+      this.watcherReady = true;
+    });
   }
 
-  setCompiler(compiler) {
-    this.compiler = compiler;
+  async load() {
+    await this.stackRouter();
   }
 
-  require(path) {
-    if (this.compiler === null) {
-      return require(path);
-    } else {
-      return requireFromFS(this.compiler.fs, path);
-    }
+  clearCache() {
+    this.loadedFiles.forEach(file => {
+      delete require.cache[require.resolve(file)];
+    });
   }
 
-  stackRouter() {
+  async stackRouter() {
     this.rootPathMap = new Map();
+    this.loadedFiles = await this.getFiles();
 
-    this.getControllers().forEach(controllerPath => {
-      const controllerClass = this.require(controllerPath);
+    this.loadedFiles.forEach(controllerPath => {
+      let controllerClass = require(controllerPath);
+      controllerClass =
+        typeof controllerClass.default === 'function'
+          ? controllerClass.default
+          : controllerClass;
 
       if (typeof controllerClass === 'function') {
         const controller = new Controller(controllerClass);
@@ -63,34 +85,9 @@ class ControllerManager {
     this.plugins.emitAfterControllers(this.rootPathMap);
   }
 
-  getControllers() {
-    const controllers = [];
-    this.controllerMap.forEach(path => {
-      controllers.push(path);
-    });
-
-    return controllers;
+  getFiles() {
+    return recursive(resolve(this.controllerDir));
   }
-
-  loadControllers() {
-    let controllers;
-    if (this.compiler === null) {
-      controllers = require(require.resolve(this.distDir));
-    } else {
-      controllers = requireFromFS(
-        this.compiler.fs,
-        resolve(this.distDir, 'index.js')
-      );
-    }
-
-    for (let controllerName in controllers) {
-      this.controllerMap.set(controllerName, controllers[controllerName]);
-    }
-  }
-}
-
-function requireFromFS(fs, path) {
-  return requireFromString(fs.readFileSync(path, 'utf-8'), path);
 }
 
 module.exports = ControllerManager;
