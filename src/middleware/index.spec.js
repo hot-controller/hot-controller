@@ -16,37 +16,52 @@ describe('middleware', () => {
     expect(typeof middleware).toBe('function');
   });
 
-  it('dont compile in non-dev', () => {
+  it('callback', async () => {
     expect.assertions(1);
-    return new Promise(resolve => {
-      process.env.NODE_ENV = 'production';
-      middleware(
-        {},
-        (router, compiler, options) => {
-          expect(compiler).toBeNull();
-          resolve();
-        },
-        fixturesPath
-      );
-    });
+    const cb = jest.fn();
+
+    await callbackPromise({}, cb);
+
+    expect(cb).toHaveBeenCalledTimes(1);
   });
 
-  it(
-    'compiles in dev',
-    () => {
-      expect.assertions(1);
-      return new Promise(resolve => {
-        middleware(
-          { dev: true },
-          (router, compiler, options) => {
-            expect(compiler).toBeTruthy();
-            compiler.close();
-            resolve();
-          },
-          fixturesPath
-        );
-      });
-    },
-    20000
-  );
+  it('returns router', done => {
+    expect.assertions(1);
+
+    middleware(
+      {},
+      router => {
+        expect(router.stack).toHaveLength(4);
+        done();
+      },
+      fixturesPath
+    );
+  });
+
+  it('watches on dev', done => {
+    process.env.NODE_ENV = 'development';
+    expect.assertions(1);
+    middleware(
+      { dev: true },
+      (router, watcher) => {
+        expect(router.stack).toHaveLength(4);
+        watcher.close();
+        done();
+      },
+      fixturesPath
+    );
+  });
 });
+
+function callbackPromise(options = {}, cb) {
+  return new Promise(resolve => {
+    middleware(
+      options,
+      () => {
+        cb();
+        resolve();
+      },
+      fixturesPath
+    );
+  });
+}

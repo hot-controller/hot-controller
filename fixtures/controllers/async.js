@@ -1,4 +1,4 @@
-const { Controller, Route } = require('../../src');
+import { Controller, Route } from '../../src';
 /**
  * AsyncController
  */

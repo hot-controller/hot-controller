@@ -2,9 +2,12 @@ const logger = require('./logger');
 
 const ControllerError = require('./error');
 const Controller = require('./controller');
-const { resolve } = require('path');
+const { resolve, extname, relative } = require('path');
 const recursive = require('recursive-readdir');
 const chokidar = require('chokidar');
+const chalk = require('chalk').default;
+
+const ALLOWED_EXTENSIONS = ['.js', '.ts', '.re'];
 
 class ControllerManager {
   constructor(router, plugins, { controllerDir }) {
@@ -17,33 +20,53 @@ class ControllerManager {
     this.watcherReady = false;
   }
 
-  reload() {
+  async reload(path = null) {
+    if (path !== null) {
+      const relativePath = relative(this.controllerDir, path);
+      logger(`local changes made to ${chalk.red(relativePath)}, replacing...`);
+    }
+
     this.clearCache();
     this.router.stack = [];
-    this.load().then(() => {
-      if (this.watcherReady) {
-        logger('🔥 hot reloaded');
-      }
-    });
+    await this.load();
+
+    if (this.watcherReady) {
+      logger.clear('Controllers 🔥 hot reloaded');
+    }
   }
 
   async watch() {
-    const reload = this.reload.bind(this);
+    const reload = () => {
+      this.reload();
+    };
+
+    await this.load();
 
     this.dirWatcher = chokidar.watch(this.controllerDir);
-    this.dirWatcher.on('add', reload);
-    this.dirWatcher.on('addDir', reload);
-    this.dirWatcher.on('unlink', reload);
-    this.dirWatcher.on('unlinkDir', reload);
-    this.dirWatcher.on('change', reload);
     this.dirWatcher.on('ready', () => {
-      logger('watcher ready');
+      this.dirWatcher.on('add', reload);
+      this.dirWatcher.on('addDir', reload);
+      this.dirWatcher.on('unlink', reload);
+      this.dirWatcher.on('unlinkDir', reload);
+      this.dirWatcher.on('change', reload);
+
+      const friendlyPath = relative(process.cwd(), this.controllerDir);
+
+      logger(
+        `hot module replacement activated! Edit your controllers at ${chalk.red(
+          `/${friendlyPath}`
+        )} and they will reload without need of restarting this server`
+      );
+
       this.watcherReady = true;
     });
+
+    return this.dirWatcher;
   }
 
   async load() {
     await this.stackRouter();
+    return this.loadedFiles;
   }
 
   clearCache() {
@@ -57,28 +80,30 @@ class ControllerManager {
     this.loadedFiles = await this.getFiles();
 
     this.loadedFiles.forEach(controllerPath => {
-      let controllerClass = require(controllerPath);
-      controllerClass =
-        typeof controllerClass.default === 'function'
-          ? controllerClass.default
-          : controllerClass;
+      if (ALLOWED_EXTENSIONS.indexOf(extname(controllerPath)) >= 0) {
+        let controllerClass = require(controllerPath);
+        controllerClass =
+          typeof controllerClass.default === 'function'
+            ? controllerClass.default
+            : controllerClass;
 
-      if (typeof controllerClass === 'function') {
-        const controller = new Controller(controllerClass);
-        if (this.rootPathMap.has(controller.path)) {
-          throw new ControllerError(
-            `${
-              controller.controllerInstance.name
-            }: A controller with root path ${
-              controller.path
-            } (${this.rootPathMap.get(
-              controller.path
-            )}) has already been initialised.`
-          );
+        if (typeof controllerClass === 'function') {
+          const controller = new Controller(controllerClass);
+          if (this.rootPathMap.has(controller.path)) {
+            throw new ControllerError(
+              `${
+                controller.controllerInstance.name
+              }: A controller with root path ${
+                controller.path
+              } (${this.rootPathMap.get(
+                controller.path
+              )}) has already been initialised.`
+            );
+          }
+
+          controller.connectRouter(this.router);
+          this.rootPathMap.set(controller.path, controller);
         }
-
-        controller.connectRouter(this.router);
-        this.rootPathMap.set(controller.path, controller);
       }
     });
 

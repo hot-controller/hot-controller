@@ -5,22 +5,6 @@ const getOptions = require('./options');
 const PluginManager = require('../plugin');
 const envIsDev =
   process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
-require('@babel/register')({
-  presets: [
-    [
-      require.resolve('@babel/preset-env'),
-      {
-        targets: {
-          node: '6'
-        }
-      }
-    ]
-  ],
-  plugins: [
-    require.resolve('babel-plugin-transform-class-properties'),
-    require.resolve('@babel/plugin-proposal-decorators')
-  ]
-});
 
 module.exports = function(
   middlewareOptions = {},
@@ -39,17 +23,34 @@ module.exports = function(
     plugins.emitBeforeControllers();
 
     const controllerDir = path.resolve(cwd, options.dir);
+
+    require('@babel/register')({
+      only: [new RegExp(controllerDir)],
+      presets: [
+        [
+          require.resolve('@babel/preset-env'),
+          {
+            targets: {
+              node: process.version
+            }
+          }
+        ]
+      ],
+      plugins: [require.resolve('@babel/plugin-proposal-decorators')]
+    });
+
     const controllerManager = new ControllerManager(router, plugins, {
       controllerDir
     });
 
     if (dev) {
-      controllerManager.watch(() => {
-        callback && callback(router, null, options);
+      controllerManager.watch().then(watcher => {
+        callback && callback(router, watcher, options);
       });
     } else {
-      controllerManager.load();
-      callback && callback(router, null, options);
+      controllerManager.load().then(() => {
+        callback && callback(router, null, options);
+      });
     }
   })();
 

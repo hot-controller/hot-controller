@@ -9,5 +9,5 @@
       }
     ]
   ],
-  "plugins": ["@babel/plugin-proposal-decorators"]
+  "plugins": ["babel-plugin-transform-decorators-legacy"]
 }
