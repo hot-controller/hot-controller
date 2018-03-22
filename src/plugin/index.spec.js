@@ -27,7 +27,7 @@ describe('PluginManager', () => {
     let plugins = new PluginManager();
     let emitter = plugins.emitter;
     await plugins.loadPluginsFromOptions({
-      plugins: ['./fixtures/dist/plugins/simple.js']
+      plugins: ['./fixtures/plugins/simple.js']
     });
 
     expect(plugins.plugins).toHaveLength(1);
@@ -109,20 +109,14 @@ describe('PluginManager', () => {
           events.on('before-controllers', () => beforeControllers());
           events.on('after-controllers', () => afterControllers());
           events.on('after-plugins-init', () => afterPluginInit());
-          events.on('webpack-config', config => {
-            config.res = true;
-          });
         }
       ]
     });
     plugins.emitBeforeControllers();
     plugins.emitAfterControllers();
-    let webpackConfig = { res: false };
-    plugins.emitWebpackConfig(webpackConfig);
 
     expect(beforeControllers).toHaveBeenCalledTimes(2);
     expect(afterControllers).toHaveBeenCalledTimes(1);
     expect(afterPluginInit).toHaveBeenCalledTimes(1);
-    expect(webpackConfig.res).toBe(true);
   });
 });

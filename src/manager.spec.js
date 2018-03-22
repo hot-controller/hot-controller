@@ -2,55 +2,41 @@ const ControllerManager = require('./manager');
 const PluginManager = require('./plugin');
 const path = require('path');
 const express = require('express');
-const distDir = path.resolve(__dirname, '../fixtures/dist/controllers');
-const withSameDistPath = path.resolve(
+const dir = path.resolve(__dirname, '../fixtures/controllers');
+const withSameDir = path.resolve(
   __dirname,
-  '../fixtures/with-same-path/dist/controllers'
+  '../fixtures/with-same-path/controllers'
 );
 
 describe('ControllerManager', () => {
-  it('loads controllers', () => {
+  it('loads routers', async () => {
     let router = express.Router();
     let manager = new ControllerManager(router, new PluginManager(), {
-      distDir
+      controllerDir: dir
     });
 
-    manager.loadControllers();
-    expect(manager.controllerMap.size).toBe(4);
-  });
-
-  it('loads routers', () => {
-    let router = express.Router();
-    let manager = new ControllerManager(router, new PluginManager(), {
-      distDir
-    });
-
-    manager.load();
+    await manager.load();
     expect(router.stack).toHaveLength(4);
-    manager.reload();
+    await manager.reload();
     expect(router.stack).toHaveLength(4);
   });
 
-  it('prevents two controllers with same root path', () => {
+  it('prevents two controllers with same root path', async () => {
     let router = express.Router();
     let manager = new ControllerManager(router, new PluginManager(), {
-      distDir: withSameDistPath
+      controllerDir: withSameDir
     });
 
-    manager.loadControllers();
-    expect(() => {
-      manager.stackRouter();
-    }).toThrow();
-  });
+    // we cant use .toThrow() on a async function
+    // see: https://github.com/facebook/jest/issues/1377
 
-  it('sets compiler', () => {
-    let router = express.Router();
-    let manager = new ControllerManager(router, new PluginManager(), {
-      distDir
-    });
+    let thrownError = null;
+    try {
+      await manager.load();
+    } catch (err) {
+      thrownError = err;
+    }
 
-    let compiler = function() {};
-    manager.setCompiler(compiler);
-    expect(manager.compiler).toBe(compiler);
+    expect(thrownError).toBeTruthy();
   });
 });

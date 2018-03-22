@@ -56,10 +56,6 @@ class PluginManager {
     this.emit('after-controllers', this.router, controllerMap);
   }
 
-  emitWebpackConfig(config) {
-    this.emit('webpack-config', config);
-  }
-
   emit(event, ...args) {
     return this.emitter.emit(event, ...args);
   }

@@ -12,11 +12,8 @@
     "lint": "eslint src",
     "test": "jest --config=jest.config.json",
     "test:lib": "jest --config=jest.lib.config.json",
-    "test:ci": "npm-run-all lint build build:fixtures test",
+    "test:ci": "npm-run-all lint build test",
     "build": "rimraf lib && babel src -d lib",
-    "build:fixtures":
-      "node fixtures/build.js && babel fixtures/plugins -d fixtures/dist/plugins",
-    "prepare": "yarn build",
     "precommit": "npm run lint && lint-staged",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
@@ -42,6 +39,7 @@
     "all-contributors-cli": "^4.11.1",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
+    "babel-jest": "^22.4.3",
     "codecov": "^3.0.0",
     "eslint": "^4.18.2",
     "eslint-plugin-jest": "^21.13.0",
@@ -54,6 +52,10 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
+    "@babel/core": "^7.0.0-beta.42",
+    "@babel/plugin-proposal-decorators": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/register": "^7.0.0-beta.42",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",

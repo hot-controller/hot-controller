@@ -22,32 +22,35 @@ module.exports = function(
     await plugins.loadPluginsFromOptions(options);
     plugins.emitBeforeControllers();
 
-    const distDir = path.resolve(cwd, options.distDir);
     const controllerDir = path.resolve(cwd, options.dir);
+
+    require('@babel/register')({
+      only: [new RegExp(controllerDir)],
+      presets: [
+        [
+          require.resolve('@babel/preset-env'),
+          {
+            targets: {
+              node: process.version
+            }
+          }
+        ]
+      ],
+      plugins: [require.resolve('@babel/plugin-proposal-decorators')]
+    });
+
     const controllerManager = new ControllerManager(router, plugins, {
-      distDir
+      controllerDir
     });
 
     if (dev) {
-      const ControllerCompiler = require('../build');
-      const compiler = new ControllerCompiler({
-        controllerDir,
-        distDir,
-        plugins
-      });
-      controllerManager.setCompiler(compiler);
-
-      compiler.watch(function(err) {
-        if (err === null) {
-          // clear the stack
-          plugins.emitBeforeControllers();
-          controllerManager.reload();
-          callback && callback(router, compiler, options);
-        }
+      controllerManager.watch().then(watcher => {
+        callback && callback(router, watcher, options);
       });
     } else {
-      controllerManager.load();
-      callback && callback(router, null, options);
+      controllerManager.load().then(() => {
+        callback && callback(router, null, options);
+      });
     }
   })();
 

@@ -1,7 +1,7 @@
 const Controller = require('./controller');
-const SimpleController = require('../fixtures/dist/controllers/simple.controller');
-const HooksController = require('../fixtures/dist/controllers/hooks.controller');
-const AsyncController = require('../fixtures/dist/controllers/async.controller');
+const SimpleController = require('../fixtures/controllers/simple').default;
+const HooksController = require('../fixtures/controllers/hooks').default;
+const AsyncController = require('../fixtures/controllers/async').default;
 const express = require('express');
 const request = require('supertest');
 

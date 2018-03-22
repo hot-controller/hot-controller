@@ -31,8 +31,10 @@ class Controller {
         path,
         isAsync
           ? (req, res, next) =>
-              Promise.resolve(method.call(this, req, res, next)).catch(next)
-          : method.bind(this)
+              Promise.resolve(
+                method.call(this.controllerInstance, req, res, next)
+              ).catch(next)
+          : method.bind(this.controllerInstance)
       );
     });
   }
