@@ -35,10 +35,10 @@ class ControllerManager {
     }
   }
 
-  async watch() {
-    const reload = () => {
-      this.reload();
-    };
+  async watch(opts = {}) {
+    const { onReady = null } = opts;
+
+    const reload = this.reload.bind(this);
 
     await this.load();
 
@@ -59,6 +59,7 @@ class ControllerManager {
       );
 
       this.watcherReady = true;
+      onReady && onReady(this.dirWatcher);
     });
 
     return this.dirWatcher;
@@ -81,11 +82,7 @@ class ControllerManager {
 
     this.loadedFiles.forEach(controllerPath => {
       if (ALLOWED_EXTENSIONS.indexOf(extname(controllerPath)) >= 0) {
-        let controllerClass = require(controllerPath);
-        controllerClass =
-          typeof controllerClass.default === 'function'
-            ? controllerClass.default
-            : controllerClass;
+        let controllerClass = require(controllerPath).default;
 
         if (typeof controllerClass === 'function') {
           const controller = new Controller(controllerClass);

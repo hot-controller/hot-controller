@@ -91,9 +91,15 @@ describe('PluginManager', () => {
     expect.assertions(1);
 
     let plugins = new PluginManager();
-    expect(() => {
-      loadPlugins(['invalid class']);
-    }).toThrow();
+    let message = null;
+
+    try {
+      await plugins.loadPlugins(['invalid class']);
+    } catch (err) {
+      message = err.message;
+    }
+
+    expect(message).not.toBeNull();
   });
 
   it('emits', async () => {
