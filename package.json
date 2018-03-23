@@ -1,6 +1,6 @@
 {
   "name": "hot-controller",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.13",
   "description":
     "hot-controller is a zero-config, hot-reloading controller library for node.js.",
   "main": "index.js",
@@ -14,6 +14,7 @@
     "test:lib": "jest --config=jest.lib.config.json",
     "test:ci": "npm-run-all lint build test",
     "build": "rimraf lib && babel src -d lib",
+    "prepare": "npm run build",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
   },
