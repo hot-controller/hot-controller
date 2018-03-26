@@ -56,6 +56,7 @@
     "@babel/plugin-proposal-decorators": "^7.0.0-beta.42",
     "@babel/preset-env": "^7.0.0-beta.42",
     "@babel/register": "^7.0.0-beta.42",
+    "babel-core": "^7.0.0-0",
     "chalk": "^2.3.2",
     "chokidar": "^2.0.2",
     "commander": "^2.15.0",
@@ -65,7 +66,6 @@
     "npm-run-all": "^4.1.2",
     "promise-events": "^0.1.4",
     "recursive-readdir": "^2.2.2",
-    "require-from-string": "^2.0.1",
     "shuri": "^1.0.1",
     "webpack": "^4.1.1",
     "webpack-sources": "^1.1.0"
