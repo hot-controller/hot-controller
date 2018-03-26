@@ -14,13 +14,6 @@ module.exports = function({ port = 3000, dev = false }) {
       logger(
         `controlled server started at ${chalk.red(`http://localhost:${port}`)}`
       );
-      if (dev) {
-        logger(
-          `hot module replacement activated! Edit your controllers at ${chalk.red(
-            `/${friendlyPath}`
-          )} and they will reload without need of restarting this server`
-        );
-      }
     });
   });
 };

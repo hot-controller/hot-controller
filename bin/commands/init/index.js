@@ -6,9 +6,9 @@ const mkdirp = require('mkdirp');
 const logger = require('../../../src/logger');
 const chalk = require('chalk').default;
 
-const template = `const { Controller, Route } = require('hot-controller');
+const template = `import { Controller, Route } from 'hot-controller';
 
-@Controller('/')
+@Controller('/home')
 export default class HomeController {
   @Route.GET('/')
   index(req, res) {
