@@ -72,7 +72,7 @@ or
 
     ...
 
-    app.use(hotControllers());
+    app.use(hotControllers(/* (optional) options */));
     ```
 
 # Controllers
@@ -86,7 +86,7 @@ All files in this directory will be parsed as a controller with `hot-controller`
 `/controllers/home.js`
 
 ```js
-const { Controller, Route } = require('hot-controller');
+import { Controller, Route } from 'hot-controller';
 
 // which path it should reside on
 @Controller('/api')
@@ -116,67 +116,61 @@ export default class HomeController {
   }
 }
 ```
-    
+
 # Plugins
+
 `hot-controller` fully supports plugins and is easily activatable in your config.
 
 We follow the "babel plugin naming scheme". (`hot-controller-plugin-[PLUGIN_NAME]`) and later in your `.controllersrc` (or what configuration method you're using) add `"plugins": [ "plugin-name" ]`
 
 ## Typescript
+
 To write your controllers in `typescript` please checkout our very own plugin [hot-controller-plugin-typescript)(https://github.com/hot-controller/hot-controller-plugin-typescript)
 
 ## Write your own plugin
+
 Writing a plugin for `hot-controller` is very simple. All it takes is a function.
 
 ```javascript
 module.exports = function(events) {
-
-  events.on('webpack-config', (config) => {
-    // modify the webpack config for the controllers
-  });
-  
-  events.on('before-controller', (router) => {
+  events.on('before-controller', router => {
     // before any controllers will be loaded
-    // using "router" argument you can add plugin specific routes or add an express middleware. 
+    // using "router" argument you can add plugin specific routes or add an express middleware.
   });
-  
+
   events.on('after-controller', (router, controllers) => {
     // after all controllers has been added to the router
     // its now perfect time to add some error handlers or routes that will not conflict with controllers.
   });
-  
 };
-
 ```
 
-
 # Hooks
+
 Your controllers can be even more controlled via hooks. Read more below for `[before](#before)` and `[after](#after)`
 
 ## Before
 
 ```javascript
+@Controller('/')
 class Controller {
-  
-   async before(req, res, next){
-     // check acl, push to logs or whatever needed to do before we continue the request
-     
-     next(); // dont forget this if you want to continue the request.
-   }
-   
+  async before(req, res, next) {
+    // check acl, push to logs or whatever needed to do before we continue the request
+
+    next(); // dont forget this if you want to continue the request.
+  }
 }
 ```
 
 ## After
 
 ```javascript
+@Controller('/')
 class Controller {
-  
-   after(){
-     // nothing more to do, 
-     // request already sent to client. but maybe you want to log something.
-   }
-   
+  after() {
+    // nothing more to do,
+    // request already sent to client. but maybe you want to log something.
+  }
 }
 ```
 
@@ -184,9 +178,9 @@ class Controller {
 
 There are many ways to configure hot-controller:
 
-* Create a `.controllersrc`
+* Create a `.controllersrc.json`
 
-  * Support for `.json`, `.js`, `.yaml/.yml` (just append extension to `.controllersrc`, ex: `.controllersrc.yml`)
+  * Support for `.json`, `.json5`, `.yaml/.yml` (just append extension to `.controllersrc`, ex: `.controllersrc.yml`)
 
 * Add `controllers` section to your `package.json` file.
 
@@ -195,29 +189,27 @@ There are many ways to configure hot-controller:
 ```js
 {
   /**
-   * tell us where we should look for your controllers
+   * where is your controllers?
    * type: string
    * default: ./controllers
    */
-  "dir": ""
+  "dir": "",
 
   /**
-   * output directory of production compiled controllers
-   * type: string
-   * default: ./dist/controllers
+   * use plugins
+   * type: string[], func[]
    */
-  "distDir": ""
+  "plugins": []
 }
 ```
 
 ## Examples
 
-1.  via `.controllersrc`
+1.  via `.controllersrc.json`
 
     ```json
     {
-      "dir": "./api",
-      "distDir": "/dist/api-controllers"
+      "dir": "./api"
     }
     ```
 
@@ -229,13 +221,9 @@ There are many ways to configure hot-controller:
 
       "controllers": {
         "dir": "./api",
-        "distDir": "/dist/api-controllers"
       },
 
       ...
-      "dependencies": {
-        ...
-      }
     }
     ```
 
@@ -244,16 +232,6 @@ There are many ways to configure hot-controller:
 `hot-controller` allows for custom `.babelrc` for your controllers. _This file is optional._
 
 In order to extend our usage of babel, you can simply define a `.babelrc` file at the root of your app or in your `controllers` directory.
-But we highly recommend you to use our preset (`hot-controller/babel`) in your `.babelrc`.
-
-Here's an example `.babelrc`:
-
-```json
-{
-  "presets": ["hot-controller/babel"],
-  "plugins": []
-}
-```
 
 # Contributors
 
