@@ -11,7 +11,6 @@
   "scripts": {
     "lint": "eslint src",
     "test": "jest --config=jest.config.json",
-    "test:lib": "jest --config=jest.lib.config.json",
     "test:ci": "npm-run-all lint build test",
     "build": "rimraf lib && babel src -d lib",
     "prepare": "npm run build",

@@ -1,9 +1,0 @@
-{
-  "collectCoverage": true,
-  "coveragePathIgnorePatterns": ["/node_modules/", "/fixtures/", "/src/"],
-  "verbose": true,
-  "testEnvironment": "node",
-  "transform": {
-    "^.+\\.jsx?$": "babel-jest"
-  }
-}
