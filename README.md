@@ -117,6 +117,8 @@ export default class HomeController {
 }
 ```
 
+Get more examples in our [examples](https://github.com/hot-controller/examples) repo
+
 # Plugins
 
 `hot-controller` fully supports plugins and is easily activatable in your config.
