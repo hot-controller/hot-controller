@@ -36,7 +36,14 @@ module.exports = function(
           }
         ]
       ],
-      plugins: [require.resolve('@babel/plugin-proposal-decorators')]
+      plugins: [
+        [
+          require.resolve('@babel/plugin-proposal-decorators'),
+          {
+            legacy: true
+          }
+        ]
+      ]
     });
 
     const controllerManager = new ControllerManager(router, plugins, {
