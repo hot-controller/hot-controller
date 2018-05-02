@@ -149,7 +149,7 @@ module.exports = function(events) {
 
 # Hooks
 
-Your controllers can be even more controlled via hooks. Read more below for `[before](#before)` and `[after](#after)`
+Your controllers can be even more controlled via hooks. Read more below for [before](#before) and [after](#after)
 
 ## Before
 
