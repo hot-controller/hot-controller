@@ -21,6 +21,15 @@
         "test",
         "tool"
       ]
+    },
+    {
+      "login": "vsoren",
+      "name": "Viktor S",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/37144243?v=4",
+      "profile": "https://github.com/vsoren",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }

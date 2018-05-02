@@ -242,8 +242,8 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/28024000?v=4" width="100px;"/><br /><sub><b>Philip Oliver</b></sub>](https://twitter.com/philipodev)<br />[💻](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Code") [📖](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Documentation") [🤔](#ideas-philipodev "Ideas, Planning, & Feedback") [👀](#review-philipodev "Reviewed Pull Requests") [⚠️](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Tests") [🔧](#tool-philipodev "Tools") |
-| :---: |
+| [<img src="https://avatars2.githubusercontent.com/u/28024000?v=4" width="100px;"/><br /><sub><b>Philip Oliver</b></sub>](https://twitter.com/philipodev)<br />[💻](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Code") [📖](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Documentation") [🤔](#ideas-philipodev "Ideas, Planning, & Feedback") [👀](#review-philipodev "Reviewed Pull Requests") [⚠️](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Tests") [🔧](#tool-philipodev "Tools") | [<img src="https://avatars0.githubusercontent.com/u/37144243?v=4" width="100px;"/><br /><sub><b>Viktor S</b></sub>](https://github.com/vsoren)<br />[📖](https://github.com/hot-controller/hot-controller/commits?author=vsoren "Documentation") |
+| :---: | :---: |
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
