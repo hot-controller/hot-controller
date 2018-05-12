@@ -1,6 +1,7 @@
 const middleware = require('./');
 const path = require('path');
 const fixturesPath = path.resolve(__dirname, '../../fixtures');
+const request = require('supertest');
 
 global.console.clear = () => {};
 global.console.warn = () => {};
@@ -33,6 +34,28 @@ describe('middleware', () => {
       router => {
         expect(router.stack).toHaveLength(4);
         done();
+      },
+      fixturesPath
+    );
+  });
+
+  it('uses options.path to serve controllers from', done => {
+    expect.assertions(2);
+
+    middleware(
+      {
+        path: 'api'
+      },
+      router => {
+        console.info(router);
+        request(router)
+          .get('/api/simple/users')
+          .then(response => {
+            expect(response.statusCode).toBe(200);
+            expect(response.text).toBe('/users');
+
+            done();
+          });
       },
       fixturesPath
     );

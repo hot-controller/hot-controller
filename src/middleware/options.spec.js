@@ -40,7 +40,7 @@ describe('options', () => {
     return getOptions(getCwd('5')).then(options => {
       expect(options).toBeTruthy();
       expect(options.dir).toBe('controllers');
-      expect(keys(options)).toHaveLength(3);
+      expect(keys(options)).toHaveLength(4);
     });
   });
 
@@ -49,7 +49,7 @@ describe('options', () => {
     return getOptions().then(options => {
       expect(options).toBeTruthy();
       expect(options.dir).toBe('controllers');
-      expect(keys(options)).toHaveLength(3);
+      expect(keys(options)).toHaveLength(4);
       expect(options.cwd).toBe(process.cwd());
     });
   });
