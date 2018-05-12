@@ -5,6 +5,7 @@ const getOptions = require('./options');
 const PluginManager = require('../plugin');
 const envIsDev =
   process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
+const { reformatRouteName } = require('../utils');
 
 module.exports = function(
   middlewareOptions = {},
@@ -23,6 +24,11 @@ module.exports = function(
     plugins.emitBeforeControllers();
 
     const controllerDir = path.resolve(cwd, options.dir);
+    let controllerRouter = router;
+    if (options.path !== null) {
+      controllerRouter = express.Router();
+      router.use(reformatRouteName(options.path), controllerRouter);
+    }
 
     require('@babel/register')({
       only: [new RegExp(controllerDir)],
@@ -46,7 +52,7 @@ module.exports = function(
       ]
     });
 
-    const controllerManager = new ControllerManager(router, plugins, {
+    const controllerManager = new ControllerManager(controllerRouter, plugins, {
       controllerDir
     });
 
