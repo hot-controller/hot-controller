@@ -135,6 +135,11 @@ Writing a plugin for `hot-controller` is very simple. All it takes is a function
 
 ```javascript
 module.exports = function(events) {
+
+  events.on('after-plugins-init', plugins => {
+    // will be fired immediately after all plugins been constructed
+  });
+
   events.on('before-controller', router => {
     // before any controllers will be loaded
     // using "router" argument you can add plugin specific routes or add an express middleware.
