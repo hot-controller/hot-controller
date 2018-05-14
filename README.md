@@ -192,7 +192,7 @@ There are many ways to configure hot-controller:
 * Add `controllers` section to your `package.json` file.
 
 ## Options
-
+   
 ```js
 {
   /**
@@ -201,6 +201,13 @@ There are many ways to configure hot-controller:
    * default: ./controllers
    */
   "dir": "",
+  
+  /**
+   * sets the orrt path for controllers (example: /api)
+   * type: string
+   * default: /
+   */
+   "path": "/api",
 
   /**
    * use plugins
