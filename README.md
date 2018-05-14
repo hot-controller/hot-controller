@@ -203,7 +203,7 @@ There are many ways to configure hot-controller:
   "dir": "",
   
   /**
-   * sets the orrt path for controllers (example: /api)
+   * sets the root path for controllers (example: /api)
    * type: string
    * default: /
    */
