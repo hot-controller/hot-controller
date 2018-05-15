@@ -135,7 +135,6 @@ Writing a plugin for `hot-controller` is very simple. All it takes is a function
 
 ```javascript
 module.exports = function(events) {
-
   events.on('after-plugins-init', plugins => {
     // will be fired immediately after all plugins been constructed
   });
@@ -192,7 +191,7 @@ There are many ways to configure hot-controller:
 * Add `controllers` section to your `package.json` file.
 
 ## Options
-   
+
 ```js
 {
   /**
@@ -201,7 +200,7 @@ There are many ways to configure hot-controller:
    * default: ./controllers
    */
   "dir": "",
-  
+
   /**
    * sets the root path for controllers (example: /api)
    * type: string
@@ -254,8 +253,8 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/28024000?v=4" width="100px;"/><br /><sub><b>Philip Oliver</b></sub>](https://twitter.com/philipodev)<br />[💻](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Code") [📖](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Documentation") [🤔](#ideas-philipodev "Ideas, Planning, & Feedback") [👀](#review-philipodev "Reviewed Pull Requests") [⚠️](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Tests") [🔧](#tool-philipodev "Tools") | [<img src="https://avatars0.githubusercontent.com/u/37144243?v=4" width="100px;"/><br /><sub><b>Viktor S</b></sub>](https://github.com/vsoren)<br />[📖](https://github.com/hot-controller/hot-controller/commits?author=vsoren "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/15069039?v=4" width="100px;"/><br /><sub><b>an90dr</b></sub>](https://github.com/an90dr)<br />[📖](https://github.com/hot-controller/hot-controller/commits?author=an90dr "Documentation") |
-| :---: | :---: | :---: |
+| [<img src="https://avatars2.githubusercontent.com/u/28024000?v=4" width="100px;"/><br /><sub><b>Philip Oliver</b></sub>](https://twitter.com/philipodev)<br />[💻](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Code") [📖](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Documentation") [🤔](#ideas-philipodev "Ideas, Planning, & Feedback") [👀](#review-philipodev "Reviewed Pull Requests") [⚠️](https://github.com/hot-controller/hot-controller/commits?author=philipodev "Tests") [🔧](#tool-philipodev "Tools") | [<img src="https://avatars0.githubusercontent.com/u/37144243?v=4" width="100px;"/><br /><sub><b>Viktor S</b></sub>](https://github.com/vsoren)<br />[📖](https://github.com/hot-controller/hot-controller/commits?author=vsoren "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/15069039?v=4" width="100px;"/><br /><sub><b>an90dr</b></sub>](https://github.com/an90dr)<br />[📖](https://github.com/hot-controller/hot-controller/commits?author=an90dr "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/23169768?v=4" width="100px;"/><br /><sub><b>Umang G. Patel</b></sub>](https://github.com/UmangGPatel)<br />[📖](https://github.com/hot-controller/hot-controller/commits?author=UmangGPatel "Documentation") |
+| :---: | :---: | :---: | :---: |
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
