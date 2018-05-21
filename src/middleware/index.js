@@ -6,6 +6,7 @@ const PluginManager = require('../plugin');
 const envIsDev =
   process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test';
 const { reformatRouteName } = require('../utils');
+const escapeStringRegexp = require('escape-string-regexp');
 
 module.exports = function(
   middlewareOptions = {},
@@ -31,7 +32,7 @@ module.exports = function(
     }
 
     require('@babel/register')({
-      only: [new RegExp(controllerDir)],
+      only: [new RegExp(escapeStringRegexp(controllerDir))],
       presets: [
         [
           require.resolve('@babel/preset-env'),
