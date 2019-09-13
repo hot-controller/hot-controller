@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.6.0",
-    "@babel/plugin-proposal-decorators": "^7.0.0-beta.46",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
     "@babel/preset-env": "^7.0.0-beta.46",
     "@babel/register": "^7.0.0-beta.46",
     "chalk": "^2.3.2",
