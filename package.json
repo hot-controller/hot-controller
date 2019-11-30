@@ -42,7 +42,7 @@
     "babel-jest": "^23.0.0",
     "codecov": "^3.0.0",
     "eslint": "^5.0.0",
-    "eslint-plugin-jest": "^21.13.0",
+    "eslint-plugin-jest": "^23.1.1",
     "husky": "^0.15.0-rc.9",
     "jest": "^22.4.2",
     "lint-staged": "^7.0.0",
